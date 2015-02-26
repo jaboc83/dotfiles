@@ -1,0 +1,8 @@
+[push]
+	default = simple
+
+[alias]
+	sglog = "log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset' --graph -10"
+[user]
+	name = "Jake Moening"
+	email = jmoening@unsignedbytes.com

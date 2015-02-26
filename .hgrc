@@ -1,0 +1,24 @@
+[ui]
+#merge = vimdiff
+user = jmoening
+editor = vim
+
+[merge-tools]
+kdiff3.args = $base $local $other -o $output
+#vimdiff.executable = vim
+#vimdiff.args = -d -c "wincmd J" $output $local $base $other -c "wincmd k" +diffoff -c "wincmd l" +diffoff -c "wincmd j"
+
+[alias]
+hist = log -G --style=C:/users/jmoening/map-cmdline.hist -l20 
+vhist = log -G --style=C:/users/jmoening/map-cmdline.hist -l13 --verbose 
+mehist = log -G --style=C:/users/jmoening/map-cmdline.hist -l13 --verbose -u jmoening
+
+[extensions]
+convert = 
+progress = 
+hgext.extdiff =
+shelve =
+rebase =
+
+[extdiff]
+cmd.kdiff3 =
