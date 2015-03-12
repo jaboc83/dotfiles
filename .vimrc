@@ -175,6 +175,8 @@ autocmd BufWrite *.c :call DeleteTrailingWS()
 autocmd BufWrite *.cpp :call DeleteTrailingWS()
 autocmd BufWrite *.js :call DeleteTrailingWS()
 autocmd BufWrite *.vimrc :call DeleteTrailingWS()
+autocmd BufWrite *.ps1 :call DeleteTrailingWS()
+autocmd BufWrite *.psm1 :call DeleteTrailingWS()
 
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
