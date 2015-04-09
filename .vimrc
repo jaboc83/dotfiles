@@ -46,9 +46,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
 " Maximize window when using GVim
 au GUIEnter * simalt ~x
 
-" use jscs if the config exists
-autocmd FileType javascript let b:syntastic_checkers = findfile('.jscsrc', '.;') != '' ? ['jscs'] : ['jshint']
-
 " Set the <leader> to comma instead of backslash
 let mapleader = ","
 let g:mapleader = ","
@@ -60,10 +57,15 @@ nnoremap <C-p> "+p
 inoremap <C-p> <ESC>"+pa
 
 " shortcut to close quickfix window
-nnoremap <leader>w :ccl<cr>
+nnoremap <leader>w :ccl<cr>:lclose<cr>
 
 " shortcut to format json
-nnoremap <leader>jj :%!python -m json.tool<cr>
+nnoremap <leader>jf :%!python -m json.tool<cr>
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<cr>
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:>-
 
 " forgot to sudo into file? force save with :w!!
 cmap w!! w !sudo tee % >/dev/null
@@ -137,21 +139,21 @@ set guifont=Inconsolata_for_Powerline:h14:cANSI
 
 " Traversing lists quickly
 " 	*Buffer List*
-nnoremap <silent> [b :bprevious<CR>
-nnoremap <silent> ]b :bnext<CR>
-nnoremap <silent> [B :bfirst<CR>
-nnoremap <silent> ]B :blast<CR>
-nnoremap <leader>bd :bd<CR>
+nnoremap <silent> [b :bprevious<cr>
+nnoremap <silent> ]b :bnext<cr>
+nnoremap <silent> [B :bfirst<cr>
+nnoremap <silent> ]B :blast<cr>
+nnoremap <leader>bd :bd<cr>
 " 	*Args List*
-nnoremap <silent> [a :previous<CR>
-nnoremap <silent> ]a :next<CR>
-nnoremap <silent> [A :first<CR>
-nnoremap <silent> ]A :last<CR>
+nnoremap <silent> [a :previous<cr>
+nnoremap <silent> ]a :next<cr>
+nnoremap <silent> [A :first<cr>
+nnoremap <silent> ]A :last<cr>
 " 	*Tag List*
-nnoremap <silent> [t :tprevious<CR>
-nnoremap <silent> ]t :tnext<CR>
-nnoremap <silent> [T :tfirst<CR>
-nnoremap <silent> ]T :tlast<CR>
+nnoremap <silent> [t :tprevious<cr>
+nnoremap <silent> ]t :tnext<cr>
+nnoremap <silent> [T :tfirst<cr>
+nnoremap <silent> ]T :tlast<cr>
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
@@ -174,6 +176,7 @@ autocmd BufWrite *.cs :call DeleteTrailingWS()
 autocmd BufWrite *.c :call DeleteTrailingWS()
 autocmd BufWrite *.cpp :call DeleteTrailingWS()
 autocmd BufWrite *.js :call DeleteTrailingWS()
+autocmd BufWrite *.jsx :call DeleteTrailingWS()
 autocmd BufWrite *.vimrc :call DeleteTrailingWS()
 autocmd BufWrite *.ps1 :call DeleteTrailingWS()
 autocmd BufWrite *.psm1 :call DeleteTrailingWS()
@@ -191,30 +194,26 @@ map <leader>sa zg
 "	suggestions
 map <leader>s? z=
 
+" Open markdown files with Chrome.
+autocmd BufEnter *.md exe 'noremap <F5> :!start C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %:p<cr>'
+
+" Auto-Reload VIMRC changes
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
+
 "--- END JAKE STUFF ---"
 "--- NERDTREE --"
 "
 " 	Commands: <C-n> open/close nerdtree
 
 " Map ctrl+n to nerdtree toggle
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<cr>
 let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
 nnoremap <leader>sin :NERDTreeFind<cr>
 
 "--- END NERDTREE --"
-"--- JSHINT ---"
-"
-" Commands: <leader> j :: Run jshint on the current file
-
-" JSHint Configuration
-let jshint2_command = 'C:/Users/jmoening/AppData/Roaming/npm/jshint.cmd'
-let jshint2_read = 0
-let jshint2_save = 0
-let jshint2_confirm = 0
-let jshint2_error = 0
-nnoremap <leader>j :JSHint<cr>
-
-"--- END JSHINT ---"
 "--- AG  ---"
 "
 " Commands: <leader>k :: Run a search
@@ -234,6 +233,15 @@ nnoremap <leader>k :Ag<space>
 "--- END NERD COMMENTER ---"
 "--- SYNTASTIC ---"
 " Commands: none.
+
+let g:syntastic_javascript_checkers=['jscs', 'jsxhint']
+nnoremap <leader>jj :SyntasticCheck<cr>:Error<cr>
+" 	*Error List*
+nnoremap <leader>E :Error<cr>
+nnoremap <silent> [e :lprevious<cr>
+nnoremap <silent> ]e :lnext<cr>
+nnoremap <silent> [E :lfirst<cr>
+nnoremap <silent> ]E :llast<cr>
 
 "--- END SYNTASTIC ---"
 "--- SURROUND ---"
@@ -266,3 +274,8 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 "--- END MULTIPLE CURSORS ---"
+"--- JSX ---"
+
+let g:jsx_ext_required=0
+
+"--- END JSX ---"
