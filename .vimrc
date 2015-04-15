@@ -67,6 +67,9 @@ nmap <leader>l :set list!<cr>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>-
 
+" Updated ctags
+nnoremap <f8> :!ctags -R .<cr>
+
 " forgot to sudo into file? force save with :w!!
 cmap w!! w !sudo tee % >/dev/null
 
@@ -203,6 +206,7 @@ augroup reload_vimrc " {
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
+
 "--- END JAKE STUFF ---"
 "--- NERDTREE --"
 "
@@ -254,9 +258,10 @@ nnoremap <silent> ]E :llast<cr>
 
 "--- END SURROUND ---"
 "--- SUPERTAB ---"
-"
+
 let g:SuperTabMappingForward = '<c-j>'
 let g:SuperTabMappingBackward = '<c-k>'
+
 "--- END SUPERTAB ---"
 "--- HTML5 ---"
 
