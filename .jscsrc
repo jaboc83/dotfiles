@@ -1,6 +1,21 @@
 {
-	"esprima": "esprima-fb",
-	"fileExtensions": [".js", ".jsx"],
-	"preset": "crockford",
-	"validateIndentation": null
+	"esnext"				: true,					
+	"fileExtensions"		: [".js"],		
+	"preset"				: "crockford",			
+	"validateIndentation"	: null,					
+	"disallowMixedSpacesAndTabs": true,
+	"plugins"				: [
+		"jscs-jsdoc"							
+	],
+	"jsDoc"					: {
+		"checkAnnotations": true,
+		"checkParamNames": true,
+		"checkTypes": "strictNativeCase",
+		"enforceExistance": "exceptExports",
+		"requireParamTypes": true,
+		"checkRedundantParams": true,
+		"checkReturnTypes": true,
+		"checkRedundantReturns": true,
+		"requireReturnTypes": true
+	}
 }

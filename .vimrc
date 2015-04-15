@@ -234,7 +234,7 @@ nnoremap <leader>k :Ag<space>
 "--- SYNTASTIC ---"
 " Commands: none.
 
-let g:syntastic_javascript_checkers=['jscs', 'jsxhint']
+let g:syntastic_javascript_checkers=['jscs']
 nnoremap <leader>jj :SyntasticCheck<cr>:Error<cr>
 " 	*Error List*
 nnoremap <leader>E :Error<cr>
@@ -274,8 +274,3 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 "--- END MULTIPLE CURSORS ---"
-"--- JSX ---"
-
-let g:jsx_ext_required=0
-
-"--- END JSX ---"
