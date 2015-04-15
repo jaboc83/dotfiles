@@ -223,7 +223,10 @@ nnoremap <leader>sin :NERDTreeFind<cr>
 " Commands: <leader>k :: Run a search
 
 " shortcut to search the filesystem with the silver searcher
-nnoremap <leader>k :Ag<space>
+nnoremap <f3> :Ag<space>
+
+" shortcut to search the filesystem with the silver searcher
+nnoremap <f4> :ta<space>
 
 "--- END AG ---"
 "--- NERD COMMENTER ---"
