@@ -1,7 +1,7 @@
 [ui]
 #merge = vimdiff
 user = jmoening
-editor = vim
+editor = gvim
 
 [merge-tools]
 kdiff3.args = $base $local $other -o $output
