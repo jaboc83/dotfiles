@@ -36,34 +36,44 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 "--- INDENT GUIDES ---"
 "
 "	Commands: <leader>ig :: show/hide the indent guides
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
 
 "--- END INDENT GUIDES ---"
 "--- JAKE STUFF ---"
 
 " Maximize window when using GVim
 au GUIEnter * simalt ~x
+set guioptions-=m "remove menubar
+set guioptions-=T "remove toolbar
+set guioptions-=r "remove right hand scrollbar
+set guioptions-=L "remove left hand scrollbar
+set guioptions-=b "remove bottom scrollbar
+
+" Set the default font for GVIM
+"set guifont=Inconsolata_for_Powerline:h14:cANSI
+"set guifont=DejaVu_Sans_Mono_for_Powerline:h12:cANSI
+set guifont=Anonymice_Powerline:h16:cANSI
 
 " Set the <leader> to comma instead of backslash
 let mapleader = ","
 let g:mapleader = ","
 
 " Copy/Paste from clipboard
-vnoremap <C-y> "+y<ESC>
-vnoremap <C-p> c<ESC>"+p
-nnoremap <C-p> "+p
-inoremap <C-p> <ESC>"+pa
+vnoremap <silent> <C-y> "+y<ESC>
+vnoremap <silent> <C-p> c<ESC>"+p
+nnoremap <silent> <C-p> "+p
+inoremap <silent> <C-p> <ESC>"+pa
 
 " shortcut to close quickfix window
-nnoremap <leader>w :ccl<cr>:lclose<cr>
+nnoremap <silent> <leader>w :ccl<cr>:lclose<cr>
 
 " shortcut to format json
-nnoremap <leader>jf :%!python -m json.tool<cr>
+nnoremap <silent> <leader>jf :%!python -m json.tool<cr>
 
 " Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<cr>
+nmap <silent> <leader>l :set list!<cr>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>-
 
@@ -116,7 +126,7 @@ map <silent> <leader><cr> :noh<cr>
 " Using ConEmu as your terminal?
 if !empty($CONEMUBUILD)
 	" Allow us to use all the fancy colors :)
-	set term=xterm
+	"set term=xterm
 	set t_Co=256
 	let &t_AB="\e[48;5;%dm"
 	let &t_AF="\e[38;5;%dm"
@@ -137,16 +147,17 @@ if &t_Co > 2 || has("gui_running")
 	syntax enable
 endif
 
-" Set the default font for GVIM
-set guifont=Inconsolata_for_Powerline:h14:cANSI
 
 " Traversing lists quickly
 " 	*Buffer List*
 nnoremap <silent> [b :bprevious<cr>
+nnoremap <silent> <A-[> :bprevious<cr>
 nnoremap <silent> ]b :bnext<cr>
+nnoremap <silent> <A-]> :bnext<cr>
 nnoremap <silent> [B :bfirst<cr>
 nnoremap <silent> ]B :blast<cr>
 nnoremap <leader>bd :bd<cr>
+nnoremap <silent> <A-x> :bd<cr>
 " 	*Args List*
 nnoremap <silent> [a :previous<cr>
 nnoremap <silent> ]a :next<cr>
@@ -183,19 +194,20 @@ autocmd BufWrite *.jsx :call DeleteTrailingWS()
 autocmd BufWrite *.vimrc :call DeleteTrailingWS()
 autocmd BufWrite *.ps1 :call DeleteTrailingWS()
 autocmd BufWrite *.psm1 :call DeleteTrailingWS()
+autocmd BufWrite *.java :call DeleteTrailingWS()
 
 " Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+map <silent> <leader>ss :setlocal spell!<cr>
 
 " Shortcuts using <leader>
 " 	next spelling error
-map <leader>sn ]s
+map <silent> <leader>sn ]s
 "	previous spelling error
-map <leader>sp [s
+map <silent> <leader>sp [s
 "	add to good word list
-map <leader>sa zg
+map <silent> <leader>sa zg
 "	suggestions
-map <leader>s? z=
+map <silent> <leader>s? z=
 
 " Open markdown files with Chrome.
 autocmd BufEnter *.md exe 'noremap <F5> :!start C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %:p<cr>'
@@ -213,9 +225,9 @@ augroup END " }
 " 	Commands: <C-n> open/close nerdtree
 
 " Map ctrl+n to nerdtree toggle
-map <C-n> :NERDTreeToggle<cr>
+map <silent> <C-n> :NERDTreeToggle<cr>
 let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
-nnoremap <leader>sin :NERDTreeFind<cr>
+nnoremap <silent> <leader>sin :NERDTreeFind<cr>
 
 "--- END NERDTREE --"
 "--- AG  ---"
@@ -242,9 +254,9 @@ nnoremap <f4> :ta<space>
 " Commands: none.
 
 let g:syntastic_javascript_checkers=['jscs']
-nnoremap <leader>jj :SyntasticCheck<cr>:Error<cr>
+nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
 " 	*Error List*
-nnoremap <leader>E :Error<cr>
+nnoremap <silent> <leader>E :Error<cr>
 nnoremap <silent> [e :lprevious<cr>
 nnoremap <silent> ]e :lnext<cr>
 nnoremap <silent> [E :lfirst<cr>
@@ -282,3 +294,7 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 "--- END MULTIPLE CURSORS ---"
+"--- TEMP ---"
+let g:syntastic_java_javac_classpath = 'C:\Users\jmoening\.gradle\caches\modules-2\files-2.1\javax.ws.rs\jsr311-api\1.1.1\59033da2a1afd56af1ac576750a8d0b1830d59e6\jsr311-api-1.1.1.jar'
+
+"--- END TEMP ---"
