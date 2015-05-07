@@ -7,6 +7,18 @@
 --exclude=bower_components
 --exclude=build
 --exclude=dist
+--exclude=obj
+--exclude=*.dll
+--exclude=*.xml
+--exclude=*.exe
+--exclude=*.bak
+--exclude=*.swp
+--exclude=tags
+--exclude=bin
+--exclude=packages
+--exclude=TestResults
+--exclude=ThirdParty
+--exclude=*.Designer.cs
 
 --languages=-html
 --extra=+q+f
