@@ -1,7 +1,14 @@
 [push]
 	default = simple
 [alias]
-	sglog = "log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset' --graph -10"
+	hist = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset' --graph -10 --branches --all
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	ahist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
 [user]
 	name = "Jake Moening"
 	email = jmoening@unsignedbytes.com
@@ -21,3 +28,33 @@
 	trustExitCode = false
 [core]
 	editor = gvim
+	autocrlf = true
+	safecrlf = warn
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[gui]
+[guitool "Rebase onto..."]
+    cmd = git rebase $REVISION
+    revprompt = yes
+[guitool "Squash from..."]
+	cmd = git merge $REVISION --squash
+	revprompt = yes
+[guitool "Tag release..."]
+	cmd = git tag -a $ARGS -m\"Release $ARGS\"
+	argprompt = yes
+[guitool "No-FF merge from..."]
+	cmd = git merge $REVISION --no-ff
+	revprompt = yes
+[guitool "Stash/Stash Current Workspace"]
+    cmd = git stash
+[guitool "Stash/Recover Stashed Workspace"]
+	cmd = git stash pop
+[guitool "Create Tracked Remote Branch..."]
+	cmd = git push -u $ARGS 
+	argprompt = yes
+[commit]
+	template = ~/.gitmessage.txt
+[pull]
+	ff = only
