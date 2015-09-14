@@ -235,9 +235,6 @@ map <silent> <leader>sa zg
 "	suggestions
 map <silent> <leader>s? z=
 
-" Open markdown files with Chrome.
-autocmd BufEnter *.md exe 'noremap <F5> :!start C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %:p<cr>'
-
 " Auto-Reload VIMRC changes
 augroup reload_vimrc " {
     autocmd!
@@ -259,12 +256,6 @@ nnoremap <silent> <leader>sin :NERDTreeFind<cr>
 "--- AG  ---"
 "
 " Commands: <leader>k :: Run a search
-
-" shortcut to search the filesystem with the silver searcher
-nnoremap <f3> :Ag<space>
-
-" shortcut to search the filesystem with the silver searcher
-nnoremap <f4> :ta<space>
 
 "--- END AG ---"
 "--- NERD COMMENTER ---"
@@ -310,20 +301,6 @@ let g:SuperTabMappingBackward = '<c-k>'
 let g:html5_event_handler_attributes_complete = 0
 
 "--- END HTML5 ---"
-"--- MULTIPLE CURSORS ---"
-
-let g:multi_cursor_start_key='g<C-i>'
-let g:multi_cursor_start_word_key='<C-i>'
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-
-"--- END MULTIPLE CURSORS ---"
-"--- TEMP ---"
-let g:syntastic_java_javac_classpath = 'C:\Users\jmoening\.gradle\caches\modules-2\files-2.1\javax.ws.rs\jsr311-api\1.1.1\59033da2a1afd56af1ac576750a8d0b1830d59e6\jsr311-api-1.1.1.jar'
-
-"--- END TEMP ---"
 "--- NEOCOMPLCACHE ---"
 
 " Disable AutoComplPop.
@@ -416,101 +393,101 @@ let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\
 let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 "--- END NEOCOMPLCACHE ---"
-"--- OMNISHARP ---"
+""--- OMNISHARP ---"
 
-"Super tab settings - uncomment the next 4 lines
-let g:SuperTabDefaultCompletionType = 'context'
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-let g:SuperTabDefaultCompletionTypeDiscovery = ["&omnifunc:<c-x><c-o>","&completefunc:<c-x><c-n>"]
-let g:SuperTabClosePreviewOnPopupClose = 1
+""Super tab settings - uncomment the next 4 lines
+"let g:SuperTabDefaultCompletionType = 'context'
+"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+"let g:SuperTabDefaultCompletionTypeDiscovery = ["&omnifunc:<c-x><c-o>","&completefunc:<c-x><c-n>"]
+"let g:SuperTabClosePreviewOnPopupClose = 1
 
-"don't autoselect first item in omnicomplete, show if only one item (for preview)
-"remove preview if you don't want to see any documentation whatsoever.
-set completeopt=longest,menuone,preview
-" Fetch full documentation during omnicomplete requests.
-" There is a performance penalty with this (especially on Mono)
-" By default, only Type/Method signatures are fetched. Full documentation can still be fetched when
-" you need it with the :OmniSharpDocumentation command.
-" let g:omnicomplete_fetch_documentation=1
+""don't autoselect first item in omnicomplete, show if only one item (for preview)
+""remove preview if you don't want to see any documentation whatsoever.
+"set completeopt=longest,menuone,preview
+"" Fetch full documentation during omnicomplete requests.
+"" There is a performance penalty with this (especially on Mono)
+"" By default, only Type/Method signatures are fetched. Full documentation can still be fetched when
+"" you need it with the :OmniSharpDocumentation command.
+"" let g:omnicomplete_fetch_documentation=1
 
-"Move the preview window (code documentation) to the bottom of the screen, so it doesn't move the code!
-"You might also want to look at the echodoc plugin
-set splitbelow
+""Move the preview window (code documentation) to the bottom of the screen, so it doesn't move the code!
+""You might also want to look at the echodoc plugin
+"set splitbelow
 
-" Get Code Issues and syntax errors
-let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
-" If you are using the omnisharp-roslyn backend, use the following
-" let g:syntastic_cs_checkers = ['code_checker']
-augroup omnisharp_commands
-    autocmd!
+"" Get Code Issues and syntax errors
+"let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+"" If you are using the omnisharp-roslyn backend, use the following
+"" let g:syntastic_cs_checkers = ['code_checker']
+"augroup omnisharp_commands
+    "autocmd!
 
-    "Set autocomplete function to OmniSharp (if not using YouCompleteMe completion plugin)
-    autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+    ""Set autocomplete function to OmniSharp (if not using YouCompleteMe completion plugin)
+    "autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
 
-    " Synchronous build (blocks Vim)
-    "autocmd FileType cs nnoremap <F5> :wa!<cr>:OmniSharpBuild<cr>
-    " Builds can also run asynchronously with vim-dispatch installed
-    autocmd FileType cs nnoremap <leader>b :wa!<cr>:OmniSharpBuildAsync<cr>
-    " automatic syntax check on events (TextChanged requires Vim 7.4)
-    autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+    "" Synchronous build (blocks Vim)
+    ""autocmd FileType cs nnoremap <F5> :wa!<cr>:OmniSharpBuild<cr>
+    "" Builds can also run asynchronously with vim-dispatch installed
+    "autocmd FileType cs nnoremap <leader>b :wa!<cr>:OmniSharpBuildAsync<cr>
+    "" automatic syntax check on events (TextChanged requires Vim 7.4)
+    "autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
 
-    " Automatically add new cs files to the nearest project on save
-    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
+    "" Automatically add new cs files to the nearest project on save
+    "autocmd BufWritePost *.cs call OmniSharp#AddToProject()
 
-    "show type information automatically when the cursor stops moving
-    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+    ""show type information automatically when the cursor stops moving
+    "autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
 
-    "The following commands are contextual, based on the current cursor position.
+    ""The following commands are contextual, based on the current cursor position.
 
-    autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
-    autocmd FileType cs nnoremap <leader>fi :OmniSharpFindImplementations<cr>
-    autocmd FileType cs nnoremap <leader>ft :OmniSharpFindType<cr>
-    autocmd FileType cs nnoremap <leader>fs :OmniSharpFindSymbol<cr>
-    autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
-    "finds members in the current buffer
-    autocmd FileType cs nnoremap <leader>fm :OmniSharpFindMembers<cr>
-    " cursor can be anywhere on the line containing an issue
-    autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
-    autocmd FileType cs nnoremap <leader>fx :OmniSharpFixUsings<cr>
-    autocmd FileType cs nnoremap <leader>tt :OmniSharpTypeLookup<cr>
-    autocmd FileType cs nnoremap <leader>dc :OmniSharpDocumentation<cr>
-    "navigate up by method/property/field
-    autocmd FileType cs nnoremap <C-K> :OmniSharpNavigateUp<cr>
-    "navigate down by method/property/field
-    autocmd FileType cs nnoremap <C-J> :OmniSharpNavigateDown<cr>
+    "autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
+    "autocmd FileType cs nnoremap <leader>fi :OmniSharpFindImplementations<cr>
+    "autocmd FileType cs nnoremap <leader>ft :OmniSharpFindType<cr>
+    "autocmd FileType cs nnoremap <leader>fs :OmniSharpFindSymbol<cr>
+    "autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
+    ""finds members in the current buffer
+    "autocmd FileType cs nnoremap <leader>fm :OmniSharpFindMembers<cr>
+    "" cursor can be anywhere on the line containing an issue
+    "autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
+    "autocmd FileType cs nnoremap <leader>fx :OmniSharpFixUsings<cr>
+    "autocmd FileType cs nnoremap <leader>tt :OmniSharpTypeLookup<cr>
+    "autocmd FileType cs nnoremap <leader>dc :OmniSharpDocumentation<cr>
+    ""navigate up by method/property/field
+    "autocmd FileType cs nnoremap <C-K> :OmniSharpNavigateUp<cr>
+    ""navigate down by method/property/field
+    "autocmd FileType cs nnoremap <C-J> :OmniSharpNavigateDown<cr>
 
-augroup END
+"augroup END
 
 
-" this setting controls how long to wait (in ms) before fetching type / symbol information.
-set updatetime=500
-" Remove 'Press Enter to continue' message when type information is longer than one line.
-set cmdheight=2
+"" this setting controls how long to wait (in ms) before fetching type / symbol information.
+"set updatetime=500
+"" Remove 'Press Enter to continue' message when type information is longer than one line.
+"set cmdheight=2
 
-" Contextual code actions (requires CtrlP or unite.vim)
-nnoremap <leader><space> :OmniSharpGetCodeActions<cr>
-" Run code actions with text selected in visual mode to extract method
-vnoremap <leader><space> :call OmniSharp#GetCodeActions('visual')<cr>
+"" Contextual code actions (requires CtrlP or unite.vim)
+"nnoremap <leader><space> :OmniSharpGetCodeActions<cr>
+"" Run code actions with text selected in visual mode to extract method
+"vnoremap <leader><space> :call OmniSharp#GetCodeActions('visual')<cr>
 
-" rename with dialog
-nnoremap <leader>nm :OmniSharpRename<cr>
-nnoremap <F2> :OmniSharpRename<cr>
-" rename without dialog - with cursor on the symbol to rename... ':Rename newname'
-command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
+"" rename with dialog
+"nnoremap <leader>nm :OmniSharpRename<cr>
+"nnoremap <F2> :OmniSharpRename<cr>
+"" rename without dialog - with cursor on the symbol to rename... ':Rename newname'
+"command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
 
-" Force OmniSharp to reload the solution. Useful when switching branches etc.
-nnoremap <leader>rl :OmniSharpReloadSolution<cr>
-nnoremap <leader>cf :OmniSharpCodeFormat<cr>
-" Load the current .cs file to the nearest project
-nnoremap <leader>tp :OmniSharpAddToProject<cr>
+"" Force OmniSharp to reload the solution. Useful when switching branches etc.
+"nnoremap <leader>rl :OmniSharpReloadSolution<cr>
+"nnoremap <leader>cf :OmniSharpCodeFormat<cr>
+"" Load the current .cs file to the nearest project
+"nnoremap <leader>tp :OmniSharpAddToProject<cr>
 
-" (Experimental - uses vim-dispatch or vimproc plugin) - Start the omnisharp server for the current solution
-nnoremap <leader>ss :OmniSharpStartServer<cr>
-nnoremap <leader>sp :OmniSharpStopServer<cr>
+"" (Experimental - uses vim-dispatch or vimproc plugin) - Start the omnisharp server for the current solution
+"nnoremap <leader>ss :OmniSharpStartServer<cr>
+"nnoremap <leader>sp :OmniSharpStopServer<cr>
 
-" Add syntax highlighting for types and interfaces
-nnoremap <leader>th :OmniSharpHighlightTypes<cr>
-"Don't ask to save when changing buffers (i.e. when jumping to a type definition)
-set hidden
+"" Add syntax highlighting for types and interfaces
+"nnoremap <leader>th :OmniSharpHighlightTypes<cr>
+""Don't ask to save when changing buffers (i.e. when jumping to a type definition)
+"set hidden
 
-"--- END OMNISHARP ---
+""--- END OMNISHARP ---
