@@ -27,8 +27,8 @@
 	path = "C:/Program Files/KDiff3/kdiff3.exe"
 	trustExitCode = false
 [core]
-	editor = gvim
-	autocrlf = true
+	editor = vim
+	autocrlf = input
 	safecrlf = warn
 [filter "lfs"]
 	clean = git lfs clean %f
@@ -54,7 +54,5 @@
 [guitool "Create Tracked Remote Branch..."]
 	cmd = git push -u $ARGS 
 	argprompt = yes
-[commit]
-	template = ~/.gitmessage.txt
 [pull]
 	ff = only
