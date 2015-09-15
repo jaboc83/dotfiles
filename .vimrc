@@ -1,37 +1,56 @@
-" This must be first, because it changes other options as side effect
-set nocompatible
-filetype plugin indent on
+"---------- VUNDLE ----------"
+" Commands:
+"	:PluginList				:: Lists configured plugins
+"	:PluginInstall			:: Installs plugins; append `!` to update or just :PluginUpdate
+"	:PluginSearch foo		:: Searches for foo; append `!` to refresh local cache
+"	:PluginClean			:: Confirms removal of unused plugins; append `!` to auto-approve removal
 
-"--- PATHOGEN ---"
-"
-"	Commands: none, just loads all the plugins
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" load the plugins
-execute pathogen#infect()
-" sessions capture global options like 'runtimepath' this can cause problems
-" so we turn it off.
-set sessionoptions-=options
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-"--- END PATHOGEN ---"
-"--- CTRLP ---"
+" let Vundle manage Vundle, required
+Plugin 'vundlevim/Vundle.vim'
 
-let g:ctrlp_map = '<C-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
+" Plugins
+Plugin 'bling/vim-airline'
+Plugin 'elzr/vim-json'
+Plugin 'ervandew/supertab'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'jonathanfilip/vim-lucius'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'othree/html5.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'valloric/youcompleteme'
+Plugin 'wting/rust.vim'
 
-"--- END CTRLP ---"
-"--- AIRLINE ---"
-"
-"	Commands: none, just shows the tabline of buffers and the status bar at the
-"	bottom
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"---------- END VUNDLE ----------"
+"---------- AIRLINE ----------"
+
+"	Commands:
+"		none, just shows the tabline of buffers and the status bar at the bottom
 
 " need utf-8 to display special characters for the arrows
 set encoding=utf-8
 " without this airline only shows up after the page has been split by nerdtree
 set laststatus=2
 " use the powerline fonts to get the fancy arrows
-"let g:airline_powerline_fonts = 1
-" Replace the branch indicator with the current working directory, followed by the filename.
+let g:airline_powerline_fonts = 1
+" NOTE: the status line below depends on vim-fugitive
 let g:airline_section_b = '%{getcwd()} %{fugitive#statusline()}'
 let g:airline_section_c = '%t'
 " show buffers in the tabline
@@ -39,16 +58,160 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename of the buffer in the tabline
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-"--- END AIRLINE ---"
-"--- INDENT GUIDES ---"
-"
-"	Commands: <leader>ig :: show/hide the indent guides
-"let g:indent_guides_auto_colors = 0
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+"---------- END AIRLINE ----------"
+"---------- JSON ----------"
 
-"--- END INDENT GUIDES ---"
-"--- JAKE STUFF ---"
+" Commands:
+"	none, just syntax-highlighting
+
+" don't hide quotes around keys automatically
+let g:vim_json_syntax_conceal = 0
+
+"---------- END JSON ----------"
+"---------- SUPERTAB ----------"
+
+" Commands:
+"	allows you to use <Tab> for all your insert completion needs
+
+let g:SuperTabMappingForward = '<c-j>'
+let g:SuperTabMappingBackward = '<c-k>'
+
+"---------- END SUPERTAB ----------"
+"---------- CSS3 SYNTAX ----------"
+
+" Commands:
+"	none. Adds css3 syntax support to vim's built-in syntax/css.vim
+
+"---------- END CSS3 SYNTAX ----------"
+"---------- LUCIUS ----------"
+
+" Commands:
+"	none. Color theme.
+
+"---------- END LUCIUS ----------"
+"---------- INDENT GUIDES ----------"
+"
+" Commands:
+"	,ig					:: Show/hide the indent guides
+
+"---------- END INDENT GUIDES ----------"
+"---------- HTML5 ----------"
+"
+" Commands:
+"	none. Syntax highlighting only.
+
+"Disable event-handler attributes support
+let g:html5_event_handler_attributes_complete = 0
+
+"---------- END HTML5 ----------"
+"---------- JAVSCRIPT ----------"
+
+" Commands:
+"	none. Adds enhanced javascript syntax indent support to vim's
+
+" enable html/css syntax highlighting in JS files
+let g:javascript_enable_domhtmlcss = 1
+
+"---------- END JAVASCRIPT ----------"
+"---------- AG ----------"
+
+" Commands:
+"	:ag [options] {pattern} [{directory}]	:: Run ag search
+
+"---------- END AG ----------"
+"---------- NERD COMMENTER ----------"
+"
+" Commands:
+"	,c						:: Toggle commenting on line or visual selection
+"	,cc						:: Comment out line or visual selection
+"	,cu						:: Uncomment line or visual selection
+"	,cs						:: Comment out the line sexy style
+"	,ca						:: Change to alternate comment style
+"	,c$						:: Commend to end of line
+
+"---------- END NERD COMMENTER ----------"
+"---------- NERDTREE --"
+"
+" Commands:
+"	Ctrl-n					:: Open/close nerdtree
+"	,sin					:: Show current file in nerdtree
+
+map <silent> <C-n> :NERDTreeToggle<cr>
+let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
+nnoremap <silent> <leader>sin :NERDTreeFind<cr>
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+"---------- END NERDTREE --"
+"---------- SYNTASTIC ----------"
+" Commands:
+"	,jj					:: Run syntax check and open error window
+"	,E					:: Open error window
+
+let g:syntastic_javascript_checkers=['jscs']
+nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
+" 	*Error List*
+nnoremap <silent> <leader>E :Error<cr>
+
+"---------- END SYNTASTIC ----------"
+"---------- FUGITIVE ----------"
+"
+" Commands:
+"	:Gdiff					:: Diff the staged and HEAD version of the current file
+"	:Gblame					:: Show git blame for current file
+"	:GStatus				:: Show git status
+"	:GCommit				:: Open git commit window
+"	:Glog					:: Show file revision history
+
+"---------- END FUGITIVE ----------"
+"---------- SURROUND ----------"
+" Commands:
+"	cs"'					:: Change surrounding " with '
+"	cs'<q>					:: Change surrounding ' with <q></q>
+"	cst"					:: Change surrounding tag with "
+"	ds"						:: Delete surrounding "
+"	ysiw]					:: Add [] around the current word
+"	yss)					:: Add () around the current line
+
+"---------- END SURROUND ----------"
+"---------- UNIMPAIRED ----------"
+" Commands:
+"	[e					:: Swap current line with one above
+"	]e					:: Swap current line with one below
+"	[q					:: Previous item in quickfix window
+"	]q					:: Next item in quickfix window
+"	[a					:: Previous file
+"	]a					:: Next file
+"	[b					:: Previous buffer
+"	]b					:: Next buffer
+"	[t					:: Previous tag
+"	]t					:: Next tag
+"	[l					:: Previous item in location list window
+"	]l					:: Next item in location list window
+"	[<space>			:: Add newline before
+"	]<space>			:: Add newline after
+"	[os					:: Turn on spellcheck
+"	]os					:: Turn off spellcheck
+"	cos					:: Spellcheck current buffer
+
+"---------- END UNIMPAIRED ----------"
+"---------- YOUCOMPLETEME ----------"
+"
+" Commands:
+"	none. Auto-completion
+
+"---------- END YOUCOMPLETEME ----------"
+"---------- RUST ----------"
+"
+" Commands:
+"	none. Syntax highlighting
+
+"---------- END RUST ----------"
+"---------- JAKE:GUI ----------"
+"
+" Commands:
+"	none.
 
 " Maximize window when using GVim
 au GUIEnter * simalt ~x
@@ -58,35 +221,41 @@ set guioptions-=r "remove right hand scrollbar
 set guioptions-=L "remove left hand scrollbar
 set guioptions-=b "remove bottom scrollbar
 
-" Set the default font for GVIM
-"set guifont=Inconsolata_for_Powerline:h14:cANSI
-"set guifont=DejaVu_Sans_Mono_for_Powerline:h12:cANSI
-"set guifont=Anonymice_Powerline:h16:cANSI
+" Set the default font for GUI
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
+
+" Allow us to use all the fancy colors :)
+"set term=xterm
+set t_Co=256
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
+
+" Set the theme when supporting 256+ colors
+if &t_Co >= 256 || has("gui_running")
+	set background=dark
+	colorscheme lucius
+	"colorscheme herokudoc
+	"colorscheme flatcolor
+endif
+
+" Syntax Highlighting when supporting 2+ colors
+if &t_Co > 2 || has("gui_running")
+	" switch syntax highlighting on, when the terminal has colors
+	syntax on
+	syntax enable
+endif
+
+"---------- JAKE:OPTIONS ----------"
+"
+" Commands:
+"	none.
 
 " Set the <leader> to comma instead of backslash
 let mapleader = ","
 let g:mapleader = ","
 
-" Copy/Paste from clipboard
-vnoremap <silent> <A-y> "+y<ESC>
-vnoremap <silent> <A-p> c<ESC>"+p
-nnoremap <silent> <A-p> "+p
-inoremap <silent> <A-p> <ESC>"+pa
-
-" shortcut to close quickfix window
-nnoremap <silent> <leader>w :ccl<cr>:lclose<cr>
-
-" shortcut to format json
-nnoremap <silent> <leader>jf :%!python -m json.tool<cr>
-
-" Shortcut to rapidly toggle `set list`
-nmap <silent> <leader>l :set list!<cr>
-" Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:>-
-
-" forgot to sudo into file? force save with :w!!
-cmap w!! w !sudo tee % >/dev/null
+" Use the >- characters for tabstops
+set listchars=eol:␊,tab:»»,trail:Ξ,extends:▶,precedes:◀,nbsp:∥
 
 "set autoread		" Set to auto read when a file is changed from the outside
 set hidden			" hide buffers instead of closing them
@@ -144,47 +313,57 @@ set wildignore+=*/.hg/*					" Mercurial
 set wildignore+=*/.git/*				" Git
 set wildignore+=*/.svn/*				" Subversion
 
+
+"---------- END JAKE:OPTIONS ----------"
+
+"---------- JAKE:SHORTCUTS ----------"
+"
+" Commands:
+"	Alt-y					:: Copy to system clipboard
+"	Alt-p					:: Paste from system clipboard
+"	,w						:: Close location list window
+"	,jf						:: Format json file
+"	,l						:: Show tabs
+"	:w!!					:: Write as Admin
+"	,<enter>				:: Clear search
+"	,bd						:: Delete buffer
+
+" Copy/Paste from clipboard
+vnoremap <silent> <A-y> "+y<ESC>
+vnoremap <silent> <A-p> c<ESC>"+p
+nnoremap <silent> <A-p> "+p
+inoremap <silent> <A-p> <ESC>"+pa
+
+" shortcut to close location list window
+nnoremap <silent> <leader>w :ccl<cr>:lclose<cr>
+
+" shortcut to format json
+nnoremap <silent> <leader>jf :%!python -m json.tool<cr>
+
+" Shortcut to rapidly toggle `set list`
+nmap <silent> <leader>l :set list!<cr>
+
+" forgot to sudo into file? force save with :w!!
+cmap w!! w !sudo tee % >/dev/null
+
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
-" Allow us to use all the fancy colors :)
-"set term=xterm
-set t_Co=256
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
-
-" Set the theme when supporting 256+ colors
-if &t_Co >= 256 || has("gui_running")
-	set background=dark
-	colorscheme lucius
-	"colorscheme herokudoc
-	"colorscheme flatcolor
-endif
-
-" Syntax Highlighting when supporting 2+ colors
-if &t_Co > 2 || has("gui_running")
-	" switch syntax highlighting on, when the terminal has colors
-	syntax on
-	syntax enable
-endif
-
-
-" Traversing lists quickly
-" 	*Buffer List*
-nnoremap <silent> [b :bprevious<cr>
-nnoremap <silent> <A-[> :bprevious<cr>
-nnoremap <silent> ]b :bnext<cr>
-nnoremap <silent> <A-]> :bnext<cr>
-nnoremap <silent> [B :bfirst<cr>
-nnoremap <silent> ]B :blast<cr>
+" Delete buffer
 nnoremap <leader>bd :bd<cr>
-nnoremap <silent> <A-x> :bd<cr>
+
+"---------- END JAKE:SHORTCUTS ----------"
+"---------- JAKE:AUTO COMMANDS ----------"
+"
+" Commands:
+"	none.
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
 " Remember info about open buffers on close
 set viminfo^=%
 
@@ -207,19 +386,6 @@ autocmd BufWrite *.ps1 :call DeleteTrailingWS()
 autocmd BufWrite *.psm1 :call DeleteTrailingWS()
 autocmd BufWrite *.java :call DeleteTrailingWS()
 
-" Pressing ,ss will toggle and untoggle spell checking
-map <silent> <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-" 	next spelling error
-map <silent> <leader>sn ]s
-"	previous spelling error
-map <silent> <leader>sp [s
-"	add to good word list
-map <silent> <leader>sa zg
-"	suggestions
-map <silent> <leader>s? z=
-
 " Auto-Reload VIMRC changes
 augroup reload_vimrc " {
     autocmd!
@@ -236,57 +402,4 @@ endw
 
 set timeout ttimeoutlen=50
 
-"--- END JAKE STUFF ---"
-"--- NERDTREE --"
-"
-" 	Commands: <C-n> open/close nerdtree
-
-" Map ctrl+n to nerdtree toggle
-map <silent> <C-n> :NERDTreeToggle<cr>
-let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
-nnoremap <silent> <leader>sin :NERDTreeFind<cr>
-
-"--- END NERDTREE --"
-"--- NERD COMMENTER ---"
-"
-" Commands: [count]<leader>c :: Toggle commenting on  line or visual selection
-"			[count]<leader>cc :: Comment out line or visual selection
-"			[count]<leader>cu :: Uncomment line or visual selection
-"			[count]<leader>cs :: Comment out the line sexy style
-"			<leader>ca :: Change to alternate comment style
-
-"--- END NERD COMMENTER ---"
-"--- SYNTASTIC ---"
-" Commands: none.
-
-let g:syntastic_javascript_checkers=['jscs']
-nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
-" 	*Error List*
-nnoremap <silent> <leader>E :Error<cr>
-nnoremap <silent> [e :lprevious<cr>
-nnoremap <silent> ]e :lnext<cr>
-nnoremap <silent> [E :lfirst<cr>
-nnoremap <silent> ]E :llast<cr>
-
-"--- END SYNTASTIC ---"
-"--- SURROUND ---"
-" Commands: cs"' 	:: change surrounding " with '
-"			cs'<q> 	:: change surrounding ' with <q></q>
-"			cst" 	:: change surrounding tag with "
-"			ds" 	:: delete surrounding "
-"			ysiw] 	:: add [] around the current word
-"			yss) 	:: add () around the current line
-
-"--- END SURROUND ---"
-"--- SUPERTAB ---"
-
-let g:SuperTabMappingForward = '<c-j>'
-let g:SuperTabMappingBackward = '<c-k>'
-
-"--- END SUPERTAB ---"
-"--- HTML5 ---"
-
-"Disable event-handler attributes support
-let g:html5_event_handler_attributes_complete = 0
-
-"--- END HTML5 ---"
+"---------- END JAKE:AUTO COMMANDS ----------"

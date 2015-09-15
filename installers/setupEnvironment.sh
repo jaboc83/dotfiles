@@ -36,13 +36,24 @@ sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
 sudo update-alternatives --set vi /usr/bin/vim
 
 # get location of running script
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-cd ${DIR}/..
+cd ~/dotfiles
 
 # make symlinks to config files
-ln -s ${DIR}/../.vimrc ~/.vimrc
-ln -s .${DIR}/../.gitconfig ~/.gitconfig
-ln -s .${DIR}/../.hgrc ~/.hgrc
-ln -s .${DIR}/../.jscsrc ~/.jscsrc
-ln -s .${DIR}/../.ctags ~/.ctags
-ln -s ${DIR}/../map-cmdline.hist ~/map-cmdline.hist
+if [ ! -h ~/dotfiles/.vimrc ]; then
+	ln -s ~/dotfiles/.vimrc ~/.vimrc
+fi
+if [ ! -h ~/dotfiles/.gitconfig ]; then
+	ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+fi
+if [ ! -h ~/dotfiles/.hgrc ]; then
+	ln -s ~/dotfiles/.hgrc ~/.hgrc
+fi
+if [ ! -h ~/dotfiles/.jscsrc ]; then
+	ln -s ~/dotfiles/.jscsrc ~/.jscsrc
+fi
+if [ ! -h ~/dotfiles/.ctags ]; then
+	ln -s ~/dotfiles/.ctags ~/.ctags
+fi
+if [ ! -h ~/dotfiles/map-cmdline.hist ]; then
+	ln -s ~/dotfiles/map-cmdline.hist ~/map-cmdline.hist
+fi

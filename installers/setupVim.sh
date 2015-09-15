@@ -1,16 +1,13 @@
 #! /bin/bash
 
-# get location of running script
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-cd ${DIR}/..
-
-# make symlinks to config files
-ln -s .vimrc
-
 mkdir -p ~/.vim/bundle
-if [ ! -d "~/.vim/bundle/Vundle.vim" ]; then
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/Bundle/Vundle.vim
+if [ ! -d "~/.vim/bundle/Vundle.Vim" ]; then
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
 echo "Installing vundle packages"
-vim +BundleInstall +qall
+vim +BundleInstall +qall 
+
+echo "building YouCompleteMe"
+cd ~/.vim/bundle/youcompleteme
+./install.py --clang-completer --omnisharp-completer --gocode-completer
