@@ -17,14 +17,14 @@
 [mergetool]
 	keepBackup = false
 [mergetool "kdiff3"]
-	path = "C:/Program Files/KDiff3/kdiff3.exe"
+	path = "/usr/bin/kdiff3"
 	trustExitCode = false
 [diff]
 	tool = kdiff3
 [difftool]
 	prompt = false
 [difftool "kdiff3"]
-	path = "C:/Program Files/KDiff3/kdiff3.exe"
+	path = "/usr/bin/kdiff3"
 	trustExitCode = false
 [core]
 	editor = vim
@@ -56,3 +56,5 @@
 	argprompt = yes
 [pull]
 	ff = only
+[credential]
+	helper = cache --timeout=3600

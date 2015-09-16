@@ -1,9 +1,10 @@
 #! /bin/bash
 
 echo "Installing tooling and dev dependencies"
-sudo apt-get update
-sudo apt-get install build-essential 
-sudo apt-get install cmake 
+sudo apt-get -y update
+sudo apt-get -y install build-essential 
+sudo apt-get -y install cmake 
+sudo apt-get -y install kdiff3
 
 echo "Building vim from source and getting rid of other versions"
 sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
@@ -57,3 +58,4 @@ fi
 if [ ! -h ~/dotfiles/map-cmdline.hist ]; then
 	ln -s ~/dotfiles/map-cmdline.hist ~/map-cmdline.hist
 fi
+
