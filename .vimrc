@@ -1,3 +1,7 @@
+" Set the <leader> to comma instead of backslash
+let mapleader = ","
+let g:mapleader = ","
+
 "---------- VUNDLE ----------"
 " Commands:
 "	:PluginList				:: Lists configured plugins
@@ -16,6 +20,7 @@ call vundle#begin()
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
+Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
@@ -39,6 +44,11 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 "---------- END VUNDLE ----------"
+"---------- GITGUTTER ----------"
+
+nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
+
+"---------- END GITGUTTER ----------"
 "---------- AIRLINE ----------"
 
 "	Commands:
@@ -249,10 +259,6 @@ endif
 "
 " Commands:
 "	none.
-
-" Set the <leader> to comma instead of backslash
-let mapleader = ","
-let g:mapleader = ","
 
 " Use the >- characters for tabstops
 set listchars=eol:␊,tab:»»,trail:Ξ,extends:▶,precedes:◀,nbsp:∥
