@@ -1,6 +1,6 @@
 " Set the <leader> to comma instead of backslash
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = " "
+let g:mapleader = " "
 
 "---------- VUNDLE ----------"
 " Commands:
