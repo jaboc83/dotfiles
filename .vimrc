@@ -13,14 +13,13 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/vimfiles/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
-Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
@@ -44,11 +43,6 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 "---------- END VUNDLE ----------"
-"---------- GITGUTTER ----------"
-
-nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
-
-"---------- END GITGUTTER ----------"
 "---------- AIRLINE ----------"
 
 "	Commands:
