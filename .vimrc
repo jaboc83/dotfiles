@@ -43,6 +43,7 @@ Plugin 'wting/rust.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+runtime macros/matchit.vim
 
 "---------- END VUNDLE ----------"
 "---------- GITGUTTER ----------"
@@ -358,6 +359,10 @@ map <silent> <leader><cr> :noh<cr>
 
 " Delete buffer
 nnoremap <leader>bd :bd<cr>
+
+" Cycle through filtered history
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 "---------- END JAKE:SHORTCUTS ----------"
 "---------- JAKE:AUTO COMMANDS ----------"
