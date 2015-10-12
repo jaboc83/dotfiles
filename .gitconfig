@@ -1,7 +1,8 @@
 [push]
 	default = simple
 [alias]
-	hist = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset' --graph -10 --branches --all
+	hist = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset' --graph  --branches --all
+	bhist = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset' --graph 
 	co = checkout
 	ci = commit
 	st = status
