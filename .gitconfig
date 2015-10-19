@@ -11,7 +11,7 @@
 	dump = cat-file -p
 [user]
 	name = "Jake Moening"
-	email = jmoening@unsignedbytes.com
+	email = jaboc83@gmail.com
 [merge]
 	tool = kdiff3
 [mergetool]
