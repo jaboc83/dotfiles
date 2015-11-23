@@ -55,7 +55,5 @@
 [guitool "Create Tracked Remote Branch..."]
 	cmd = git push -u $ARGS 
 	argprompt = yes
-[commit]
-	template = ~/.gitmessage.txt
 [pull]
 	ff = only
