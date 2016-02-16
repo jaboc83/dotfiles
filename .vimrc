@@ -20,11 +20,12 @@ call vundle#begin()
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
-Plugin 'airblade/vim-gitgutter'
+"Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
 Plugin 'hail2u/vim-css3-syntax'
+Plugin 'digitaltoad/vim-jade'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'othree/html5.vim'
@@ -37,7 +38,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'valloric/youcompleteme'
+"Plugin 'valloric/youcompleteme'
 Plugin 'wting/rust.vim'
 
 " All of your Plugins must be added before the following line
@@ -48,7 +49,7 @@ runtime macros/matchit.vim
 "---------- END VUNDLE ----------"
 "---------- GITGUTTER ----------"
 
-nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
+"nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
 
 "---------- END GITGUTTER ----------"
 "---------- AIRLINE ----------"
@@ -326,6 +327,12 @@ if exists('+colorcolumn')
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
+
+map <silent> <leader>ts :!clear;npm start<cr>
+map <silent> <leader>tt :!clear;./node_modules/mocha/bin/mocha %:p<cr>
+"map <silent> <leader>tt :!clear;npm test<cr>
+map <silent> <leader>tc :!clear;g++ %:p;./a.out<cr>
+map <silent> <leader>tn :!clear;node %:p<cr>
 
 "---------- END JAKE:OPTIONS ----------"
 
