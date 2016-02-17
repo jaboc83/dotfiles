@@ -28,7 +28,7 @@
 	path = "C:/Program Files/KDiff3/kdiff3.exe"
 	trustExitCode = false
 [core]
-	editor = gvim
+	#editor = gvim
 	autocrlf = true
 	safecrlf = warn
 [filter "lfs"]

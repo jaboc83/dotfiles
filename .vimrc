@@ -38,6 +38,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'wting/rust.vim'
+Plugin 'raimondi/delimitMate'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,6 +95,11 @@ let g:SuperTabMappingBackward = '<c-k>'
 "	none. Color theme.
 
 "---------- END LUCIUS ----------"
+"---------- DELIMIT MATE -----------"
+" Commands:
+"	none. Adds closing brace automatically
+imap <C-c> <CR><Esc>O
+"---------- END DELIMIT MATE -----------"
 "---------- INDENT GUIDES ----------"
 "
 " Commands:
@@ -151,10 +157,11 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 "---------- END NERDTREE --"
 "---------- SYNTASTIC ----------"
 " Commands:
-"	,jj					:: Run syntax check and open error window
-"	,E					:: Open error window
+"	<leader>jj		:: Run syntax check and open error window
+"	<leader>E		:: Open error window
 
 let g:syntastic_javascript_checkers=['jscs']
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
 nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
 " 	*Error List*
 nnoremap <silent> <leader>E :Error<cr>
@@ -259,12 +266,10 @@ set listchars=eol:␊,tab:»»,trail:Ξ,extends:▶,precedes:◀,nbsp:∥
 "set autoread		" Set to auto read when a file is changed from the outside
 set hidden			" hide buffers instead of closing them
 set nowrap			" don't wrap lines
-set tabstop=4		" a tab is four spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent		" always set autoindenting on
 set copyindent		" copy the previous indentation on autoindenting
 set number			" always show line numbers
-set shiftwidth=4	" number of spaces to use for autoindent
 set shiftround		" use multiple of shiftwidth when indenting with '<' and '>'
 set noshowmatch		" showmatch disabled due to slowness with omnisharp
 "set showmatch		" briefly flash to the matching brace when you insert one (doesn't scroll)
@@ -284,7 +289,6 @@ set visualbell		" don't beep
 set noerrorbells	" don't beep
 set nobackup		" don't create backup files
 set noswapfile		" don't create swap files
-set softtabstop=4	" tabbing inside insert mode is same as tabstop
 set pastetoggle=<F2> " stop autoformatting issues by switching to paste mode
 set lazyredraw		" Don't redrew while executing macros (good performance congif)
 set foldmethod=indent "fold based on indent.(za toggle fold)
@@ -312,6 +316,41 @@ set wildignore+=*/.hg/*					" Mercurial
 set wildignore+=*/.git/*				" Git
 set wildignore+=*/.svn/*				" Subversion
 
+if exists('+colorcolumn')
+	set colorcolumn=80
+else
+	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+, -1)
+endif
+
+" virtual tabstops using spaces
+let my_tab=2
+execute "set tabstop=".my_tab
+set softtabstop=0
+set noexpandtab
+execute "set shiftwidth=".my_tab
+" allow toggling between local and default mode
+function! TabToggle()
+  if &expandtab
+    execute "set tabstop=".g:my_tab
+    set softtabstop=0
+    set noexpandtab
+    execute "set shiftwidth=".g:my_tab
+  else
+    execute "set tabstop=".g:my_tab
+    set softtabstop=0
+    set expandtab
+    execute "set shiftwidth=".g:my_tab
+    set smarttab
+  endif
+endfunction
+nmap <F9> mz:execute TabToggle()<CR>'z
+
+map <silent> <leader>tps :!cls;npm start<cr>
+map <silent> <leader>tmt :!cls;./node_modules/mocha/bin/mocha %:p<cr>
+"map <silent> <leader>tpt :!clear;npm test<cr>
+map <silent> <leader>tcc :!cls;g++ -std=c++11 %:p;a.out<cr>
+map <silent> <leader>tnr :!cls;node %:p<cr>
+map <silent> <leader>tnd :!cls;node-debug %:p<cr>
 
 "---------- END JAKE:OPTIONS ----------"
 
