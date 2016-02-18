@@ -5,12 +5,12 @@ let g:mapleader = " "
 "---------- VUNDLE ----------"
 " Commands:
 "	:PluginList				:: Lists configured plugins
-"	:PluginInstall			:: Installs plugins; append `!` to update or just :PluginUpdate
-"	:PluginSearch foo		:: Searches for foo; append `!` to refresh local cache
+"	:PluginInstall		:: Installs plugins; append `!` to update or just :PluginUpdate
+"	:PluginSearch foo	:: Searches for foo; append `!` to refresh local cache
 "	:PluginClean			:: Confirms removal of unused plugins; append `!` to auto-approve removal
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible    " be iMproved, required
+filetype off        " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -20,6 +20,7 @@ call vundle#begin()
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
+Plugin 'ap/vim-css-color'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
@@ -29,16 +30,19 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pprovost/vim-ps1'
+Plugin 'raimondi/delimitMate'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'shougo/neocomplcache.vim'
+Plugin 'ternjs/tern_for_vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'valloric/youcompleteme'
 Plugin 'wting/rust.vim'
-Plugin 'raimondi/delimitMate'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -74,6 +78,26 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:vim_json_syntax_conceal = 0
 
 "---------- END JSON ----------"
+"---------- TERN ----------"
+
+" Commands:
+"	<leader> td 	:: Documentation under cursor
+"	<leader> tb 	:: Browse Documentation
+"	<leader> tt 	:: Type hints
+"	<leader> td 	:: Jump to definition
+"	<leader> tpd 	:: Jump to definition inside preview
+"	<leader> tsd 	:: Definition in new split
+"	<leader> ttd 	:: Definition in new tab
+"	<leader> tr 	:: All references under cursor
+"	<leader> tR 	:: Rename variable
+
+" Use above mappings
+let g:tern_map_keys=1
+" Display arg type hints when cursor is left over function
+"let g:tern_show_argument_hints='on_hold'
+
+
+"---------- END TERN ----------"
 "---------- SUPERTAB ----------"
 
 " Commands:
@@ -103,7 +127,7 @@ imap <C-c> <CR><Esc>O
 "---------- INDENT GUIDES ----------"
 "
 " Commands:
-"	,ig					:: Show/hide the indent guides
+"	<leader>ig					:: Show/hide the indent guides
 
 "---------- END INDENT GUIDES ----------"
 "---------- HTML5 ----------"
@@ -133,19 +157,19 @@ let g:javascript_enable_domhtmlcss = 1
 "---------- NERD COMMENTER ----------"
 "
 " Commands:
-"	,c						:: Toggle commenting on line or visual selection
-"	,cc						:: Comment out line or visual selection
-"	,cu						:: Uncomment line or visual selection
-"	,cs						:: Comment out the line sexy style
-"	,ca						:: Change to alternate comment style
-"	,c$						:: Commend to end of line
+"	<leader>c						:: Toggle commenting on line or visual selection
+"	<leader>cc						:: Comment out line or visual selection
+"	<leader>cu						:: Uncomment line or visual selection
+"	<leader>cs						:: Comment out the line sexy style
+"	<leader>ca						:: Change to alternate comment style
+"	<leader>c$						:: Commend to end of line
 
 "---------- END NERD COMMENTER ----------"
 "---------- NERDTREE --"
 "
 " Commands:
-"	Ctrl-n					:: Open/close nerdtree
-"	,sin					:: Show current file in nerdtree
+"	Ctrl-n				:: Open/close nerdtree
+"	<leader>sin					:: Show current file in nerdtree
 
 map <silent> <C-n> :NERDTreeToggle<cr>
 let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
@@ -157,7 +181,7 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 "---------- END NERDTREE --"
 "---------- SYNTASTIC ----------"
 " Commands:
-"	<leader>jj		:: Run syntax check and open error window
+"	<leader>jj	:: Run syntax check and open error window
 "	<leader>E		:: Open error window
 
 let g:syntastic_javascript_checkers=['jscs']
@@ -170,17 +194,17 @@ nnoremap <silent> <leader>E :Error<cr>
 "---------- FUGITIVE ----------"
 "
 " Commands:
-"	:Gdiff					:: Diff the staged and HEAD version of the current file
-"	:Gblame					:: Show git blame for current file
-"	:GStatus				:: Show git status
-"	:GCommit				:: Open git commit window
+"	:Gdiff				:: Diff the staged and HEAD version of the current file
+"	:Gblame				:: Show git blame for current file
+"	:GStatus			:: Show git status
+"	:GCommit			:: Open git commit window
 "	:Glog					:: Show file revision history
 
 "---------- END FUGITIVE ----------"
 "---------- SURROUND ----------"
 " Commands:
 "	cs"'					:: Change surrounding " with '
-"	cs'<q>					:: Change surrounding ' with <q></q>
+"	cs'<q>				:: Change surrounding ' with <q></q>
 "	cst"					:: Change surrounding tag with "
 "	ds"						:: Delete surrounding "
 "	ysiw]					:: Add [] around the current word
@@ -189,23 +213,23 @@ nnoremap <silent> <leader>E :Error<cr>
 "---------- END SURROUND ----------"
 "---------- UNIMPAIRED ----------"
 " Commands:
-"	[e					:: Swap current line with one above
-"	]e					:: Swap current line with one below
-"	[q					:: Previous item in quickfix window
-"	]q					:: Next item in quickfix window
-"	[a					:: Previous file
-"	]a					:: Next file
-"	[b					:: Previous buffer
-"	]b					:: Next buffer
-"	[t					:: Previous tag
-"	]t					:: Next tag
-"	[l					:: Previous item in location list window
-"	]l					:: Next item in location list window
+"	[e						:: Swap current line with one above
+"	]e						:: Swap current line with one below
+"	[q						:: Previous item in quickfix window
+"	]q						:: Next item in quickfix window
+"	[a						:: Previous file
+"	]a						:: Next file
+"	[b						:: Previous buffer
+"	]b						:: Next buffer
+"	[t						:: Previous tag
+"	]t						:: Next tag
+"	[l						:: Previous item in location list window
+"	]l						:: Next item in location list window
 "	[<space>			:: Add newline before
 "	]<space>			:: Add newline after
-"	[os					:: Turn on spellcheck
-"	]os					:: Turn off spellcheck
-"	cos					:: Spellcheck current buffer
+"	[os						:: Turn on spellcheck
+"	]os						:: Turn off spellcheck
+"	cos						:: Spellcheck current buffer
 
 "---------- END UNIMPAIRED ----------"
 "---------- YOUCOMPLETEME ----------"
@@ -263,58 +287,59 @@ endif
 " Use the >- characters for tabstops
 set listchars=eol:␊,tab:»»,trail:Ξ,extends:▶,precedes:◀,nbsp:∥
 
-"set autoread		" Set to auto read when a file is changed from the outside
-set hidden			" hide buffers instead of closing them
-set nowrap			" don't wrap lines
+"set autoread			" Set to auto read when a file is changed from the outside
+set hidden				" hide buffers instead of closing them
+set tabstop=2			" Tabstop should look like 2 spaces"
+set nowrap				" don't wrap lines
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent		" always set autoindenting on
 set copyindent		" copy the previous indentation on autoindenting
-set number			" always show line numbers
+set number				" always show line numbers
 set shiftround		" use multiple of shiftwidth when indenting with '<' and '>'
 set noshowmatch		" showmatch disabled due to slowness with omnisharp
 "set showmatch		" briefly flash to the matching brace when you insert one (doesn't scroll)
-set mat=2			" How many tenths of a second to blink when matching brackets
+set mat=2					" How many tenths of a second to blink when matching brackets
 set ignorecase		" ignore case when searching with /
-set smartcase		" ignore case if search pattern is all lowercase, case sensitive
-					" otherwise (ignorecase is required for this to work)
-set smarttab		" inserts tabs on the start of a line according to shiftwidth, not tabstop
-set hlsearch		" highlight search terms
-set incsearch		" show search matches as you type
+set smartcase			" ignore case if search pattern is all lowercase, case sensitive
+										" otherwise (ignorecase is required for this to work)
+set smarttab			" inserts tabs on the start of a line according to shiftwidth, not tabstop
+set hlsearch			" highlight search terms
+set incsearch			" show search matches as you type
 set history=1000	" remember more commands and search history
 set undolevels=1000 " use many muchos levels of undo
-set wildmenu		" autocompletion menu on vim commands
+set wildmenu			" autocompletion menu on vim commands
 set wildmode=longest:full,full " menu display mode
-set title			" change the terminal's title automatically to the filename
+set title					" change the terminal's title automatically to the filename
 set visualbell		" don't beep
 set noerrorbells	" don't beep
-set nobackup		" don't create backup files
+set nobackup			" don't create backup files
 set noswapfile		" don't create swap files
-set pastetoggle=<F2> " stop autoformatting issues by switching to paste mode
+set pastetoggle=<F2> 	" stop autoformatting issues by switching to paste mode
 set lazyredraw		" Don't redrew while executing macros (good performance congif)
-set foldmethod=indent "fold based on indent.(za toggle fold)
+set foldmethod=indent 	"fold based on indent.(za toggle fold)
 set foldnestmax=10	" deepest fold is 10 levels
 set nofoldenable	" don't fold by default
 set foldlevel=100
-set lbr				" Linebreak on 500 characters
+set lbr						" Linebreak on 500 characters
 set tw=500
 
 " ignore these filetypes
 set wildignore+=*/tmp/*,*/temp/*		" Temp directories
 set wildignore+=*.testsettings			" VS MSTEST Testsettings files
-set wildignore+=*.swp					" Swap files
-set wildignore+=*.bak					" Backup files
-set wildignore+=*.dll					" Dynamically linked libraries
-set wildignore+=tags					" Ctags
-set wildignore+=*.zip,*.7zip,*.tar		" Compressed files
-set wildignore+=*.exe,*.o				" Binaries
+set wildignore+=*.swp								" Swap files
+set wildignore+=*.bak								" Backup files
+set wildignore+=*.dll								" Dynamically linked libraries
+set wildignore+=tags								" Ctags
+set wildignore+=*.zip,*.7zip,*.tar	" Compressed files
+set wildignore+=*.exe,*.o						" Binaries
 set wildignore+=*.suo,*.sln,*.csproj	" VS ProjectManagement Files
-set wildignore+=*.xml					" XML Data
+set wildignore+=*.xml								" XML Data
 set wildignore+=*/node_modules/*		" Node dependencies
 set wildignore+=*/bower_modules/*		" Bower dependencies
 set wildignore+=*/bin/*,*/obj/*			" Binary directories
-set wildignore+=*/.hg/*					" Mercurial
-set wildignore+=*/.git/*				" Git
-set wildignore+=*/.svn/*				" Subversion
+set wildignore+=*/.hg/*							" Mercurial
+set wildignore+=*/.git/*						" Git
+set wildignore+=*/.svn/*						" Subversion
 
 if exists('+colorcolumn')
 	set colorcolumn=80
@@ -322,35 +347,21 @@ else
 	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+, -1)
 endif
 
-" virtual tabstops using spaces
-let my_tab=2
-execute "set tabstop=".my_tab
-set softtabstop=0
-set noexpandtab
-execute "set shiftwidth=".my_tab
-" allow toggling between local and default mode
-function! TabToggle()
-  if &expandtab
-    execute "set tabstop=".g:my_tab
-    set softtabstop=0
-    set noexpandtab
-    execute "set shiftwidth=".g:my_tab
-  else
-    execute "set tabstop=".g:my_tab
-    set softtabstop=0
-    set expandtab
-    execute "set shiftwidth=".g:my_tab
-    set smarttab
-  endif
-endfunction
-nmap <F9> mz:execute TabToggle()<CR>'z
+" Window Navigation
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-l> <C-W>l
+map <C-h> <C-W>h
 
 map <silent> <leader>tps :!cls;npm start<cr>
 map <silent> <leader>tmt :!cls;./node_modules/mocha/bin/mocha %:p<cr>
-"map <silent> <leader>tpt :!clear;npm test<cr>
+map <silent> <leader>tpt :!clear;npm test<cr>
 map <silent> <leader>tcc :!cls;g++ -std=c++11 %:p;a.out<cr>
 map <silent> <leader>tnr :!cls;node %:p<cr>
 map <silent> <leader>tnd :!cls;node-debug %:p<cr>
+
+" Close scratch/preview window
+map <silent> <leader>q :pc<cr>
 
 "---------- END JAKE:OPTIONS ----------"
 
@@ -359,12 +370,12 @@ map <silent> <leader>tnd :!cls;node-debug %:p<cr>
 " Commands:
 "	Alt-y					:: Copy to system clipboard
 "	Alt-p					:: Paste from system clipboard
-"	,w						:: Close location list window
-"	,jf						:: Format json file
-"	,l						:: Show tabs
+"	<leader>w					:: Close location list window
+"	<leader>jf					:: Format json file
+"	<leader>l					:: Show tabs
 "	:w!!					:: Write as Admin
-"	,<enter>				:: Clear search
-"	,bd						:: Delete buffer
+"	<leader><enter>				:: Clear search
+"	<leader>bd					:: Delete buffer
 
 " Copy/Paste from clipboard
 vnoremap <silent> <A-y> "+y<ESC>
