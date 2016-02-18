@@ -20,7 +20,7 @@ call vundle#begin()
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
-"Plugin 'airblade/vim-gitgutter'
+Plugin 'ap/vim-css-color'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
@@ -31,14 +31,17 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pprovost/vim-ps1'
+Plugin 'raimondi/delimitmate'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
+Plugin 'ternjs/tern_for_vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-"Plugin 'valloric/youcompleteme'
+Plugin 'valloric/youcompleteme'
 Plugin 'wting/rust.vim'
 
 " All of your Plugins must be added before the following line
@@ -81,6 +84,26 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:vim_json_syntax_conceal = 0
 
 "---------- END JSON ----------"
+"---------- TERN ----------"
+
+" Commands:
+"	<leader> td 	:: Documentation under cursor
+"	<leader> tb 	:: Browse Documentation
+"	<leader> tt 	:: Type hints
+"	<leader> td 	:: Jump to definition
+"	<leader> tpd 	:: Jump to definition inside preview
+"	<leader> tsd 	:: Definition in new split
+"	<leader> ttd 	:: Definition in new tab
+"	<leader> tr 	:: All references under cursor
+"	<leader> tR 	:: Rename variable
+
+" Use above mappings
+let g:tern_map_keys=1
+" Display arg type hints when cursor is left over function
+"let g:tern_show_argument_hints='on_hold'
+
+
+"---------- END TERN ----------"
 "---------- SUPERTAB ----------"
 
 " Commands:
@@ -105,7 +128,7 @@ let g:SuperTabMappingBackward = '<c-k>'
 "---------- INDENT GUIDES ----------"
 "
 " Commands:
-"	,ig					:: Show/hide the indent guides
+" <leader>ig					:: Show/hide the indent guides
 
 "---------- END INDENT GUIDES ----------"
 "---------- HTML5 ----------"
@@ -135,19 +158,19 @@ let g:javascript_enable_domhtmlcss = 1
 "---------- NERD COMMENTER ----------"
 "
 " Commands:
-"	,c						:: Toggle commenting on line or visual selection
-"	,cc						:: Comment out line or visual selection
-"	,cu						:: Uncomment line or visual selection
-"	,cs						:: Comment out the line sexy style
-"	,ca						:: Change to alternate comment style
-"	,c$						:: Commend to end of line
+" <leader>c						:: Toggle commenting on line or visual selection
+" <leader>cc						:: Comment out line or visual selection
+" <leader>cu						:: Uncomment line or visual selection
+" <leader>cs						:: Comment out the line sexy style
+" <leader>ca						:: Change to alternate comment style
+" <leader>c$						:: Commend to end of line
 
 "---------- END NERD COMMENTER ----------"
 "---------- NERDTREE --"
 "
 " Commands:
 "	Ctrl-n					:: Open/close nerdtree
-"	,sin					:: Show current file in nerdtree
+" <leader>sin					:: Show current file in nerdtree
 
 map <silent> <C-n> :NERDTreeToggle<cr>
 let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
@@ -159,8 +182,8 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 "---------- END NERDTREE --"
 "---------- SYNTASTIC ----------"
 " Commands:
-"	,jj					:: Run syntax check and open error window
-"	,E					:: Open error window
+" <leader>jj					:: Run syntax check and open error window
+" <leader>E					:: Open error window
 
 let g:syntastic_javascript_checkers=['jscs']
 nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
@@ -268,13 +291,12 @@ set listchars=eol:␊,tab:»»,trail:Ξ,extends:▶,precedes:◀,nbsp:∥
 
 "set autoread		" Set to auto read when a file is changed from the outside
 set hidden			" hide buffers instead of closing them
+set tabstop=2		" a tab is four spaces
 set nowrap			" don't wrap lines
-set tabstop=4		" a tab is four spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent		" always set autoindenting on
 set copyindent		" copy the previous indentation on autoindenting
 set number			" always show line numbers
-set shiftwidth=4	" number of spaces to use for autoindent
 set shiftround		" use multiple of shiftwidth when indenting with '<' and '>'
 set noshowmatch		" showmatch disabled due to slowness with omnisharp
 "set showmatch		" briefly flash to the matching brace when you insert one (doesn't scroll)
@@ -328,11 +350,22 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-map <silent> <leader>ts :!clear;npm start<cr>
-map <silent> <leader>tt :!clear;./node_modules/mocha/bin/mocha %:p<cr>
-"map <silent> <leader>tt :!clear;npm test<cr>
-map <silent> <leader>tc :!clear;g++ %:p;./a.out<cr>
-map <silent> <leader>tn :!clear;node %:p<cr>
+" Window Navigation
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-l> <C-W>l
+map <C-h> <C-W>h
+
+map <silent> <leader>tps :!clear;npm start<cr>
+map <silent> <leader>tmt :!clear;./node_modules/mocha/bin/mocha %:p<cr>
+map <silent> <leader>tpt :!clear;npm test<cr>
+map <silent> <leader>tcc :!clear;g++ %:p;./a.out<cr>
+map <silent> <leader>tnr :!clear;node %:p<cr>
+map <silent> <leader>tlr :!clear;learnyounode run %:p<cr>
+map <silent> <leader>tlv :!clear;learnyounode verify %:p<cr>
+
+" Close scratch / preview window
+map <silent> <leader>q :pc<cr>
 
 "---------- END JAKE:OPTIONS ----------"
 
@@ -341,12 +374,12 @@ map <silent> <leader>tn :!clear;node %:p<cr>
 " Commands:
 "	Alt-y					:: Copy to system clipboard
 "	Alt-p					:: Paste from system clipboard
-"	,w						:: Close location list window
-"	,jf						:: Format json file
-"	,l						:: Show tabs
+" <leader>w						:: Close location list window
+" <leader>jf						:: Format json file
+" <leader>l						:: Show tabs
 "	:w!!					:: Write as Admin
-"	,<enter>				:: Clear search
-"	,bd						:: Delete buffer
+" <leader><enter>				:: Clear search
+" <leader>bd						:: Delete buffer
 
 " Copy/Paste from clipboard
 vnoremap <silent> <A-y> "+y<ESC>

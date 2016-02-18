@@ -55,6 +55,9 @@ fi
 if [ ! -h ~/dotfiles/.ctags ]; then
 	ln -s ~/dotfiles/.ctags ~/.ctags
 fi
+if [ ! -h ~/dotfiles/.tern-config ]; then
+	ln -s ~/dotfiles/.tern-config ~/.tern-config
+fi
 if [ ! -h ~/dotfiles/map-cmdline.hist ]; then
 	ln -s ~/dotfiles/map-cmdline.hist ~/map-cmdline.hist
 fi
