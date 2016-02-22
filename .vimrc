@@ -21,12 +21,16 @@ Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
 Plugin 'ap/vim-css-color'
+Plugin 'blackrush/vim-gocode'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
+Plugin 'fatih/vim-go'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'jonathanfilip/vim-lucius'
+Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'omnisharp/omnisharp-vim'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pprovost/vim-ps1'
@@ -36,10 +40,11 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'shougo/neocomplcache.vim'
+Plugin 'shougo/unite.vim'
 Plugin 'ternjs/tern_for_vim'
+Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'valloric/youcompleteme'
 Plugin 'wting/rust.vim'
@@ -78,6 +83,14 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:vim_json_syntax_conceal = 0
 
 "---------- END JSON ----------"
+"---------- TAGBAR ----------"
+
+" Commands:
+"	<f8>					:: Toggle tagbar
+
+nmap <F8> :TagbarToggle<CR>
+
+"---------- END TAGBAR ----------"
 "---------- TERN ----------"
 
 " Commands:
@@ -139,6 +152,69 @@ imap <C-c> <CR><Esc>O
 let g:html5_event_handler_attributes_complete = 0
 
 "---------- END HTML5 ----------"
+"---------- OMNISHARP ----------"
+"
+" Commands:
+"	none. dotnet completion server
+
+" Use unite for code actions, find type, and find symbol
+let g:OmniSharp_selector_ui = 'unite'  " Use unite.vim
+
+"Super tab settings - uncomment the next 4 lines
+"let g:SuperTabDefaultCompletionType = 'context'
+"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+"let g:SuperTabDefaultCompletionTypeDiscovery = ["&omnifunc:<c-x><c-o>","&completefunc:<c-x><c-n>"]
+"let g:SuperTabClosePreviewOnPopupClose = 1
+" Get code issues and syntax errors
+let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+" Contextual code actions (requires CtrlP or unite.vim)
+nnoremap <leader><space> :OmniSharpGetCodeActions<cr>
+" Run code actions with text selected in visual mode to extract method
+vnoremap <leader><space> :call OmniSharp#GetCodeActions('visual')<cr>
+" Add syntax highlighting for types and interfaces
+nnoremap <leader>th :OmniSharpHighlightTypes<cr>
+
+augroup omnisharp_commands
+    autocmd!
+
+    "Set autocomplete function to OmniSharp (if not using YouCompleteMe completion plugin)
+    "autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+
+    " Synchronous build (blocks Vim)
+    "autocmd FileType cs nnoremap <F5> :wa!<cr>:OmniSharpBuild<cr>
+    " Builds can also run asynchronously with vim-dispatch installed
+    autocmd FileType cs nnoremap <leader>b :wa!<cr>:OmniSharpBuildAsync<cr>
+    " automatic syntax check on events (TextChanged requires Vim 7.4)
+    autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+
+    " Automatically add new cs files to the nearest project on save
+    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
+
+    "show type information automatically when the cursor stops moving
+    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+    "The following commands are contextual, based on the current cursor position.
+
+    autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
+    autocmd FileType cs nnoremap <leader>fi :OmniSharpFindImplementations<cr>
+    autocmd FileType cs nnoremap <leader>ft :OmniSharpFindType<cr>
+    autocmd FileType cs nnoremap <leader>fs :OmniSharpFindSymbol<cr>
+    autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
+    "finds members in the current buffer
+    autocmd FileType cs nnoremap <leader>fm :OmniSharpFindMembers<cr>
+    " cursor can be anywhere on the line containing an issue
+    "autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
+    "autocmd FileType cs nnoremap <leader>fx :OmniSharpFixUsings<cr>
+    autocmd FileType cs nnoremap <leader>tt :OmniSharpTypeLookup<cr>
+    autocmd FileType cs nnoremap <leader>dc :OmniSharpDocumentation<cr>
+    "navigate up by method/property/field
+    "autocmd FileType cs nnoremap <C-K> :OmniSharpNavigateUp<cr>
+    "navigate down by method/property/field
+    "autocmd FileType cs nnoremap <C-J> :OmniSharpNavigateDown<cr>
+
+augroup END
+
+"---------- END OMNISHARP ----------"
 "---------- JAVSCRIPT ----------"
 
 " Commands:
@@ -186,6 +262,9 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 
 let g:syntastic_javascript_checkers=['jscs']
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
 " 	*Error List*
 nnoremap <silent> <leader>E :Error<cr>
@@ -341,11 +420,37 @@ set wildignore+=*/.hg/*							" Mercurial
 set wildignore+=*/.git/*						" Git
 set wildignore+=*/.svn/*						" Subversion
 
+" Marker line at 80 columns
 if exists('+colorcolumn')
 	set colorcolumn=80
 else
 	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+, -1)
 endif
+
+" virtual tabstops using spaces
+let my_tab=2
+execute "set shiftwidth=".g:my_tab
+set softtabstop=0
+set noexpandtab
+" allow toggling between local and default mode
+function! TabToggle()
+  if &expandtab
+  	execute "echo('tabs')"
+    execute "set shiftwidth=".g:my_tab
+    set softtabstop=0
+    set noexpandtab
+  else
+  	execute "echo('spaces')"
+    execute "set shiftwidth=".g:my_tab
+    execute "set softtabstop=".g:my_tab
+    set expandtab
+  endif
+endfunction
+nmap <F9> mz:execute TabToggle()<CR>'z
+
+" Save aliases
+map <C-s> :w<cr>
+map <C-S-s> :w!<cr>
 
 " Window Navigation
 map <C-j> <C-W>j
