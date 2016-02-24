@@ -21,7 +21,6 @@ Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
 Plugin 'ap/vim-css-color'
-Plugin 'blackrush/vim-gocode'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
@@ -89,8 +88,23 @@ let g:vim_json_syntax_conceal = 0
 "	<f8>					:: Toggle tagbar
 
 nmap <F8> :TagbarToggle<CR>
+nmap <leader>st :TagbarShowTag<CR>
 
 "---------- END TAGBAR ----------"
+"---------- GO ----------"
+
+" Commands:
+"
+
+" Shell commands for GO
+au FileType go nmap <leader>tr <Plug>(go-run)
+au FileType go nmap <leader>tb <Plug>(go-build)
+au FileType go nmap <leader>tt <Plug>(go-test)
+au FileType go nmap <leader>tc <Plug>(go-coverage)
+"au FileType go nmap <leader>tgd <Plug>(go-docs)
+"au FileType go nmap <leader>tgb <Plug>(go-docs-browser)
+
+"---------- END GO ----------"
 "---------- TERN ----------"
 
 " Commands:
@@ -458,12 +472,15 @@ map <C-k> <C-W>k
 map <C-l> <C-W>l
 map <C-h> <C-W>h
 
-map <silent> <leader>tps :!cls;npm start<cr>
-map <silent> <leader>tmt :!cls;./node_modules/mocha/bin/mocha %:p<cr>
-map <silent> <leader>tpt :!clear;npm test<cr>
-map <silent> <leader>tcc :!cls;g++ -std=c++11 %:p;a.out<cr>
-map <silent> <leader>tnr :!cls;node %:p<cr>
-map <silent> <leader>tnd :!cls;node-debug %:p<cr>
+" Shell commands for Javascript
+au FileType javascript nmap <silent> <leader>tr :!cls;npm start;echo "npm start"<cr>
+au FileType javascript nmap <silent> <leader>tR :!cls;node %:p;echo "node filename"<cr>
+au FileType javascript nmap <silent> <leader>tt :!cls;npm test<cr>
+au FileType javascript nmap <silent> <leader>tT :!cls;./node_modules/mocha/bin/mocha %:p<cr>
+au FileType javascript nmap <silent> <leader>td :!cls;node-debug %:p<cr>
+" Shell commands for C++
+au FileType cpp nmap <silent> <leader>tb :!cls;g++ -std=c++11 %:p;a.out<cr>
+
 
 " Close scratch/preview window
 map <silent> <leader>q :pc<cr>
