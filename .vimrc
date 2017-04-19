@@ -20,12 +20,12 @@ call vundle#begin()
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
-Plugin 'airblade/vim-gitgutter'
 Plugin 'ap/vim-css-color'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
 Plugin 'hail2u/vim-css3-syntax'
+Plugin 'digitaltoad/vim-jade'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'majutsushi/tagbar'
 Plugin 'mxw/vim-jsx'
@@ -38,19 +38,16 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+runtime macros/matchit.vim
 
 "---------- END VUNDLE ----------"
-"---------- GITGUTTER ----------"
-
-nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
-
-"---------- END GITGUTTER ----------"
 "---------- AIRLINE ----------"
 
 "	Commands:
@@ -63,7 +60,6 @@ set laststatus=2
 " use the powerline fonts to get the fancy arrows
 let g:airline_powerline_fonts = 1
 " NOTE: the status line below depends on vim-fugitive
-"let g:airline_section_b = '%{getcwd()} %{fugitive#statusline()}'
 let g:airline_section_b = '%{fugitive#statusline()}'
 let g:airline_section_c = '%t'
 " show buffers in the tabline
@@ -293,7 +289,7 @@ set wildignore+=*/.svn/*						" Subversion
 if exists('+colorcolumn')
 	set colorcolumn=80
 else
-	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+, -1)
+	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
 " virtual tabstops using spaces
@@ -322,13 +318,9 @@ map <C-s> :w<cr>
 map <C-S-s> :w!<cr>
 
 " Shell commands for Javascript
-au FileType javascript nmap <silent> <leader>tr :!cls;npm start;echo "npm start"<cr>
-au FileType javascript nmap <silent> <leader>tR :!cls;node %:p;echo "node filename"<cr>
-au FileType javascript nmap <silent> <leader>tt :!cls;npm test<cr>
-au FileType javascript nmap <silent> <leader>tT :!cls;./node_modules/mocha/bin/mocha %:p<cr>
-au FileType javascript nmap <silent> <leader>td :!cls;node-debug %:p<cr>
+map <silent> <leader>tps :!clear;npm start<cr>
 
-" Close scratch/preview window
+" Close scratch / preview window
 map <silent> <leader>q :pc<cr>
 
 " Split braces and throw a semi-colon at the end of the line and pop up to the previous line
