@@ -28,16 +28,17 @@ Plugin 'hail2u/vim-css3-syntax'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'majutsushi/tagbar'
+Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pprovost/vim-ps1'
-Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
@@ -118,12 +119,23 @@ let g:html5_event_handler_attributes_complete = 0
 let g:javascript_enable_domhtmlcss = 1
 
 "---------- END JAVASCRIPT ----------"
-"---------- AG ----------"
+"---------- ACK ----------"
 
 " Commands:
 "	:ag [options] {pattern} [{directory}]	:: Run ag search
 
-"---------- END AG ----------"
+let g:ackhighlight = 1
+let g:ack_autoclose = 1
+let g:ack_autofold_results = 1
+let g:ack_use_dispatch = 1
+let g:ackprg = 'ag --path-to-agignore ~/.agignore --nogroup --nocolor --column'
+nnoremap <leader>a :Ack!<space>
+let g:ack_mappings = {
+      \  'v':  '<C-W><CR><C-W>L<C-W>p<C-W>J<C-W>p',
+      \ 'gv': '<C-W><CR><C-W>L<C-W>p<C-W>J' }
+
+
+"---------- END ACK ----------"
 "---------- NERD COMMENTER ----------"
 "
 " Commands:
@@ -284,6 +296,7 @@ set wildignore+=*/bin/*,*/obj/*			" Binary directories
 set wildignore+=*/.hg/*							" Mercurial
 set wildignore+=*/.git/*						" Git
 set wildignore+=*/.svn/*						" Subversion
+set diffopt+=iwhite,vertical 				" Show diffs with a vert split and ignore whitespace
 
 " Marker line at 80 columns
 if exists('+colorcolumn')
@@ -331,6 +344,8 @@ imap <C-S-j> <cr><esc>A,<esc>O
 imap <C-S-l> <cr><esc>O
 " Semicolon to the end of line and open a new line below
 imap <C-S-h> <esc>A;<esc>o
+
+nmap <silent> <leader>cd :cd %:p:h<cr>
 
 "---------- END JAKE:OPTIONS ----------"
 
