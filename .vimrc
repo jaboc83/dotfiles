@@ -27,22 +27,20 @@ Plugin 'ervandew/supertab'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'jonathanfilip/vim-lucius'
+Plugin 'majutsushi/tagbar'
+Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pprovost/vim-ps1'
-Plugin 'raimondi/delimitmate'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'ternjs/tern_for_vim'
+Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'valloric/youcompleteme'
-Plugin 'wting/rust.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -50,11 +48,6 @@ filetype plugin indent on    " required
 runtime macros/matchit.vim
 
 "---------- END VUNDLE ----------"
-"---------- GITGUTTER ----------"
-
-"nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
-
-"---------- END GITGUTTER ----------"
 "---------- AIRLINE ----------"
 
 "	Commands:
@@ -67,7 +60,7 @@ set laststatus=2
 " use the powerline fonts to get the fancy arrows
 let g:airline_powerline_fonts = 1
 " NOTE: the status line below depends on vim-fugitive
-let g:airline_section_b = '%{getcwd()} %{fugitive#statusline()}'
+let g:airline_section_b = '%{fugitive#statusline()}'
 let g:airline_section_c = '%t'
 " show buffers in the tabline
 let g:airline#extensions#tabline#enabled = 1
@@ -84,47 +77,23 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:vim_json_syntax_conceal = 0
 
 "---------- END JSON ----------"
-"---------- TERN ----------"
+"---------- TAGBAR ----------"
 
 " Commands:
-"	<leader> td 	:: Documentation under cursor
-"	<leader> tb 	:: Browse Documentation
-"	<leader> tt 	:: Type hints
-"	<leader> td 	:: Jump to definition
-"	<leader> tpd 	:: Jump to definition inside preview
-"	<leader> tsd 	:: Definition in new split
-"	<leader> ttd 	:: Definition in new tab
-"	<leader> tr 	:: All references under cursor
-"	<leader> tR 	:: Rename variable
+"	<f8>					:: Toggle tagbar
 
-" Use above mappings
-let g:tern_map_keys=1
-" Display arg type hints when cursor is left over function
-"let g:tern_show_argument_hints='on_hold'
+nmap <F8> :TagbarToggle<CR>
+nmap <leader>st :TagbarShowTag<CR>
+let g:tagbar_type_ps1 = {
+    \ 'ctagstype' : 'powershell',
+    \ 'kinds'     : [
+        \ 'f:function',
+        \ 'i:filter',
+        \ 'a:alias'
+    \ ]
+\ }
 
-
-"---------- END TERN ----------"
-"---------- SUPERTAB ----------"
-
-" Commands:
-"	allows you to use <Tab> for all your insert completion needs
-
-let g:SuperTabMappingForward = '<c-j>'
-let g:SuperTabMappingBackward = '<c-k>'
-
-"---------- END SUPERTAB ----------"
-"---------- CSS3 SYNTAX ----------"
-
-" Commands:
-"	none. Adds css3 syntax support to vim's built-in syntax/css.vim
-
-"---------- END CSS3 SYNTAX ----------"
-"---------- LUCIUS ----------"
-
-" Commands:
-"	none. Color theme.
-
-"---------- END LUCIUS ----------"
+"---------- END TAGBAR ----------"
 "---------- INDENT GUIDES ----------"
 "
 " Commands:
@@ -158,7 +127,6 @@ let g:javascript_enable_domhtmlcss = 1
 "---------- NERD COMMENTER ----------"
 "
 " Commands:
-" <leader>c						:: Toggle commenting on line or visual selection
 " <leader>cc						:: Comment out line or visual selection
 " <leader>cu						:: Uncomment line or visual selection
 " <leader>cs						:: Comment out the line sexy style
@@ -172,25 +140,17 @@ let g:javascript_enable_domhtmlcss = 1
 "	Ctrl-n					:: Open/close nerdtree
 " <leader>sin					:: Show current file in nerdtree
 
-map <silent> <C-n> :NERDTreeToggle<cr>
+
 let NERDTreeIgnore = ['\.pdb$','\.dll$','\.sln$','\.csproj$', '\.user$', '\.dat$', '\.dll.config$', '\.xml$']
 nnoremap <silent> <leader>sin :NERDTreeFind<cr>
+map <silent> <C-n> :NERDTreeToggle<cr>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
+
+
 "---------- END NERDTREE --"
-"---------- SYNTASTIC ----------"
-" Commands:
-" <leader>jj					:: Run syntax check and open error window
-" <leader>E					:: Open error window
-
-let g:syntastic_javascript_checkers=['jscs']
-nnoremap <silent> <leader>jj :SyntasticCheck<cr>:Error<cr>
-" 	*Error List*
-nnoremap <silent> <leader>E :Error<cr>
-
-"---------- END SYNTASTIC ----------"
 "---------- FUGITIVE ----------"
 "
 " Commands:
@@ -199,6 +159,8 @@ nnoremap <silent> <leader>E :Error<cr>
 "	:GStatus				:: Show git status
 "	:GCommit				:: Open git commit window
 "	:Glog					:: Show file revision history
+
+nmap <F7> :Gstatus<CR>
 
 "---------- END FUGITIVE ----------"
 "---------- SURROUND ----------"
@@ -232,18 +194,6 @@ nnoremap <silent> <leader>E :Error<cr>
 "	cos					:: Spellcheck current buffer
 
 "---------- END UNIMPAIRED ----------"
-"---------- YOUCOMPLETEME ----------"
-"
-" Commands:
-"	none. Auto-completion
-
-"---------- END YOUCOMPLETEME ----------"
-"---------- RUST ----------"
-"
-" Commands:
-"	none. Syntax highlighting
-
-"---------- END RUST ----------"
 "---------- JAKE:GUI ----------"
 "
 " Commands:
@@ -270,8 +220,6 @@ let &t_AF="\e[38;5;%dm"
 if &t_Co >= 256 || has("gui_running")
 	set background=dark
 	colorscheme lucius
-	"colorscheme herokudoc
-	"colorscheme flatcolor
 endif
 
 " Syntax Highlighting when supporting 2+ colors
@@ -287,11 +235,11 @@ endif
 "	none.
 
 " Use the >- characters for tabstops
-set listchars=eol:␊,tab:»»,trail:Ξ,extends:▶,precedes:◀,nbsp:∥
+set listchars=eol:○,trail:■,extends:›,precedes:‹,nbsp:·,tab:─┐
 
 "set autoread		" Set to auto read when a file is changed from the outside
 set hidden			" hide buffers instead of closing them
-set tabstop=2		" a tab is four spaces
+set tabstop=2			" Tabstop should look like 2 spaces"
 set nowrap			" don't wrap lines
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent		" always set autoindenting on
@@ -316,7 +264,6 @@ set visualbell		" don't beep
 set noerrorbells	" don't beep
 set nobackup		" don't create backup files
 set noswapfile		" don't create swap files
-set softtabstop=4	" tabbing inside insert mode is same as tabstop
 set pastetoggle=<F2> " stop autoformatting issues by switching to paste mode
 set lazyredraw		" Don't redrew while executing macros (good performance congif)
 set foldmethod=indent "fold based on indent.(za toggle fold)
@@ -344,36 +291,59 @@ set wildignore+=*/.hg/*					" Mercurial
 set wildignore+=*/.git/*				" Git
 set wildignore+=*/.svn/*				" Subversion
 
+" Marker line at 80 columns
 if exists('+colorcolumn')
   set colorcolumn=80
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-" Window Navigation
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-l> <C-W>l
-map <C-h> <C-W>h
+" virtual tabstops using spaces
+let my_tab=2
+execute "set shiftwidth=".g:my_tab
+set softtabstop=0
+set noexpandtab
+" allow toggling between local and default mode
+function! TabToggle()
+  if &expandtab
+  	execute "echo('tabs')"
+    execute "set shiftwidth=".g:my_tab
+    set softtabstop=0
+    set noexpandtab
+  else
+  	execute "echo('spaces')"
+    execute "set shiftwidth=".g:my_tab
+    execute "set softtabstop=".g:my_tab
+    set expandtab
+  endif
+endfunction
+nmap <F9> mz:execute TabToggle()<CR>'z
+
+" Save aliases
+map <C-s> :w<cr>
+map <C-S-s> :w!<cr>
 
 map <silent> <leader>tps :!clear;npm start<cr>
-map <silent> <leader>tmt :!clear;./node_modules/mocha/bin/mocha %:p<cr>
-map <silent> <leader>tpt :!clear;npm test<cr>
-map <silent> <leader>tcc :!clear;g++ %:p;./a.out<cr>
-map <silent> <leader>tnr :!clear;node %:p<cr>
-map <silent> <leader>tlr :!clear;learnyounode run %:p<cr>
-map <silent> <leader>tlv :!clear;learnyounode verify %:p<cr>
 
 " Close scratch / preview window
 map <silent> <leader>q :pc<cr>
+
+" Split braces and throw a semi-colon at the end of the line and pop up to the previous line
+imap <C-S-k> <cr><esc>A;<esc>O
+" Split braces and throw a comma at the end of the line and pop up to the previous line
+imap <C-S-j> <cr><esc>A,<esc>O
+" Split braces and pop up to the previous line
+imap <C-S-l> <cr><esc>O
+" Semicolon to the end of line and open a new line below
+imap <C-S-h> <esc>A;<esc>o
 
 "---------- END JAKE:OPTIONS ----------"
 
 "---------- JAKE:SHORTCUTS ----------"
 "
 " Commands:
-"	Alt-y					:: Copy to system clipboard
-"	Alt-p					:: Paste from system clipboard
+"	Ctl-c							:: Copy to system clipboard
+"	Ctrl-v						:: Paste from system clipboard
 " <leader>w						:: Close location list window
 " <leader>jf						:: Format json file
 " <leader>l						:: Show tabs
@@ -382,10 +352,10 @@ map <silent> <leader>q :pc<cr>
 " <leader>bd						:: Delete buffer
 
 " Copy/Paste from clipboard
-vnoremap <silent> <A-y> "+y<ESC>
-vnoremap <silent> <A-p> c<ESC>"+p
-nnoremap <silent> <A-p> "+p
-inoremap <silent> <A-p> <ESC>"+pa
+vnoremap <silent> <C-c> "+y<ESC>
+vnoremap <silent> <C-v> c<ESC>"+p
+nnoremap <silent> <C-v> "+p
+inoremap <silent> <C-v> <ESC>"+pa
 
 " shortcut to close location list window
 nnoremap <silent> <leader>w :ccl<cr>:lclose<cr>
@@ -458,5 +428,24 @@ while c <= 'z'
 endw
 
 set timeout ttimeoutlen=50
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('cs', 'green', 'none', '#55FF55', '#313131')
+call NERDTreeHighlightFile('ps1', 'yellow', 'none', '#5599FF', '#313131')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#313131')
+call NERDTreeHighlightFile('psm1', 'yellow', 'none', '#22FFFF', '#313131')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#313131')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#313131')
+call NERDTreeHighlightFile('json', 'yellow', 'none', '#D1C630', '#313131')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#313131')
+call NERDTreeHighlightFile('txt', 'cyan', 'none', 'cyan', '#313131')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#313131')
+call NERDTreeHighlightFile('dll', 'Red', 'none', 'red', '#313131')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#313131')
 
 "---------- END JAKE:AUTO COMMANDS ----------"
