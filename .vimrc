@@ -20,6 +20,7 @@ call vundle#begin()
 Plugin 'vundlevim/Vundle.vim'
 
 " Plugins
+Plugin 'airblade/vim-gitgutter'
 Plugin 'ap/vim-css-color'
 Plugin 'bling/vim-airline'
 Plugin 'elzr/vim-json'
@@ -45,6 +46,11 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 "---------- END VUNDLE ----------"
+"---------- GITGUTTER ----------"
+
+nnoremap <silent> <leader>gg :GitGutterLineHighlightsToggle<cr>
+
+"---------- END GITGUTTER ----------"
 "---------- AIRLINE ----------"
 
 "	Commands:
@@ -157,6 +163,8 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 "	:GStatus			:: Show git status
 "	:GCommit			:: Open git commit window
 "	:Glog					:: Show file revision history
+
+nmap <F7> :Gstatus<CR>
 
 "---------- END FUGITIVE ----------"
 "---------- SURROUND ----------"
@@ -337,14 +345,14 @@ imap <C-S-h> <esc>A;<esc>o
 "---------- JAKE:SHORTCUTS ----------"
 "
 " Commands:
-"	Alt-y					:: Copy to system clipboard
-"	Alt-p					:: Paste from system clipboard
+"	Ctl-c							:: Copy to system clipboard
+"	Ctrl-v						:: Paste from system clipboard
 "	<leader>w					:: Close location list window
-"	<leader>jf					:: Format json file
+"	<leader>jf				:: Format json file
 "	<leader>l					:: Show tabs
-"	:w!!					:: Write as Admin
-"	<leader><enter>				:: Clear search
-"	<leader>bd					:: Delete buffer
+"	:w!!							:: Write as Admin
+"	<leader><enter>		:: Clear search
+"	<leader>bd				:: Delete buffer
 
 " Copy/Paste from clipboard
 vnoremap <silent> <C-c> "+y<ESC>
