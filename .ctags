@@ -19,6 +19,9 @@
 --exclude=TestResults
 --exclude=ThirdParty
 --exclude=*.Designer.cs
+--exclude=*.LinqConnect.tmpl
+--exclude=*.lqml
+--exclude=*.view
 
 --languages=-html
 --extra=+q+f

@@ -1,0 +1,10 @@
+**/*.min.js
+**/*.dll
+**/*.exe
+**/.git/**
+**/*.edps
+**/*.lqml
+**/*.view
+**/*.tmpl
+**/packages/**
+**/*.dacpac

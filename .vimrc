@@ -30,18 +30,20 @@ Plugin 'jonathanfilip/vim-lucius'
 Plugin 'majutsushi/tagbar'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
+Plugin 'myw/vim-polymer'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
+Plugin 'polymerlabs/polylint'
 Plugin 'pprovost/vim-ps1'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
-Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-syntastic/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -125,8 +127,6 @@ let g:javascript_enable_domhtmlcss = 1
 "	:ag [options] {pattern} [{directory}]	:: Run ag search
 
 let g:ackhighlight = 1
-let g:ack_autoclose = 1
-let g:ack_autofold_results = 1
 let g:ack_use_dispatch = 1
 let g:ackprg = 'ag --path-to-agignore ~/.agignore --nogroup --nocolor --column'
 nnoremap <leader>a :Ack!<space>
@@ -290,13 +290,17 @@ set wildignore+=*.zip,*.7zip,*.tar	" Compressed files
 set wildignore+=*.exe,*.o						" Binaries
 set wildignore+=*.suo,*.sln,*.csproj	" VS ProjectManagement Files
 set wildignore+=*.xml								" XML Data
+set wildignore+=*/packages/*				" .NET dependencies
 set wildignore+=*/node_modules/*		" Node dependencies
 set wildignore+=*/bower_modules/*		" Bower dependencies
 set wildignore+=*/bin/*,*/obj/*			" Binary directories
 set wildignore+=*/.hg/*							" Mercurial
 set wildignore+=*/.git/*						" Git
 set wildignore+=*/.svn/*						" Subversion
+set wildignore+=*.dacpac 						" dacpac files
+set wildignore+=*.lqml,*.edps,*.view,*.Designer.cs,*.linqconnect.tmpl " LinqConnect
 set diffopt+=iwhite,vertical 				" Show diffs with a vert split and ignore whitespace
+set path+=** 												" include subfolders in path
 
 " Marker line at 80 columns
 if exists('+colorcolumn')
@@ -344,8 +348,18 @@ imap <C-S-j> <cr><esc>A,<esc>O
 imap <C-S-l> <cr><esc>O
 " Semicolon to the end of line and open a new line below
 imap <C-S-h> <esc>A;<esc>o
-
+" set current directory to current file's location
 nmap <silent> <leader>cd :cd %:p:h<cr>
+
+" toggle relative line numbers
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set nornu
+  else
+    set rnu
+  endif
+endfunc
+nnoremap <F3> :call NumberToggle()<cr>
 
 "---------- END JAKE:OPTIONS ----------"
 
@@ -457,5 +471,4 @@ call NERDTreeHighlightFile('txt', 'cyan', 'none', 'cyan', '#313131')
 call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#313131')
 call NERDTreeHighlightFile('dll', 'Red', 'none', 'red', '#313131')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#313131')
-
 "---------- END JAKE:AUTO COMMANDS ----------"
